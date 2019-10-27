@@ -1,11 +1,13 @@
 package cn.shineiot.base.mvp
 
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
+import rx.Observable
+import rx.Subscriber
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
 
 /**
  * Created by xuhao on 2017/11/16.
- *
  */
 open class BasePresenter<T : IBaseView> : IPresenter<T> {
 
@@ -22,7 +24,7 @@ open class BasePresenter<T : IBaseView> : IPresenter<T> {
     override fun detachView() {
         mRootView = null
 
-         //保证activity结束时取消所有正在执行的订阅
+        //保证activity结束时取消所有正在执行的订阅
         if (!compositeDisposable.isDisposed) {
             compositeDisposable.clear()
         }
@@ -36,11 +38,14 @@ open class BasePresenter<T : IBaseView> : IPresenter<T> {
         if (!isViewAttached) throw MvpViewNotAttachedException()
     }
 
-    fun addSubscription(disposable: Disposable) {
-        compositeDisposable.add(disposable)
+    private class MvpViewNotAttachedException internal constructor() :
+        RuntimeException("Please call IPresenter.attachView(IBaseView) before" + " requesting data to the IPresenter")
+
+    fun addSubscription(observable: Observable<*>) {
+        observable
+            .subscribeOn(Schedulers.io())
+            .unsubscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+//            .subscribe(subscriber)
     }
-
-    private class MvpViewNotAttachedException internal constructor() : RuntimeException("Please call IPresenter.attachView(IBaseView) before" + " requesting data to the IPresenter")
-
-
 }

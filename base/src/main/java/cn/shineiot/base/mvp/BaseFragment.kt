@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package cn.shineiot.base.mvp
 
 import android.os.Bundle
@@ -13,8 +15,9 @@ import android.view.ViewGroup
  * desc:
  */
 
- abstract class BaseFragment: Fragment(){
+ abstract class BaseFragment<V : IBaseView, T : BasePresenter<V>>: Fragment(){
 
+    var presenter : T? = null
     /**
      * 视图是否加载完毕
      */
@@ -42,7 +45,19 @@ import android.view.ViewGroup
         isViewPrepare = true
         initView()
         lazyLoadDataIfPrepared()
+        initP()
+    }
 
+    /**
+     * 初始化presenter
+     */
+    abstract fun initPresenter(): T?
+
+    fun initP() {
+        presenter = initPresenter()
+        if(null != presenter) {
+            presenter!!.attachView(this as V)
+        }
     }
 
     private fun lazyLoadDataIfPrepared() {
@@ -75,6 +90,7 @@ import android.view.ViewGroup
 
     override fun onDestroy() {
         super.onDestroy()
+        presenter?.detachView()
     }
 
 }

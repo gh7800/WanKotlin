@@ -2,6 +2,7 @@ package cn.shineiot.base.mvp
 
 import android.content.Context
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -12,19 +13,29 @@ import android.widget.EditText
  * created: 2017/10/25
  * desc:BaseActivity基类
  */
-abstract class BaseActivity : AppCompatActivity() {
+@Suppress("UNCHECKED_CAST")
+abstract class BaseActivity<V : IBaseView, T : BasePresenter<V>> : AppCompatActivity() {
+
+    var presenter: T? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layoutId())
+        initPresenter()
         initData()
         initView()
+        initP()
     }
 
     /**
      *  加载布局
      */
     abstract fun layoutId(): Int
+
+    /**
+     * 初始化presenter
+     */
+    abstract fun initPresenter(): T?
 
     /**
      * 初始化数据
@@ -35,6 +46,13 @@ abstract class BaseActivity : AppCompatActivity() {
      * 初始化 View
      */
     abstract fun initView()
+
+    fun initP() {
+        presenter = initPresenter()
+        if(null != presenter) {
+            presenter!!.attachView(this as V)
+        }
+    }
 
 
     /**
@@ -57,6 +75,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        presenter?.detachView()
     }
 
 }

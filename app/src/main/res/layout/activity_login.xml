@@ -21,7 +21,7 @@
         android:layout_marginTop="96dp"
         android:layout_marginEnd="24dp"
 
-        android:hint="@string/prompt_email"
+        android:text="请输入用户名"
         android:inputType="textEmailAddress"
         android:selectAllOnFocus="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,7 +36,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="24dp"
 
-        android:hint="@string/prompt_password"
+        android:text="pw100861"
         android:imeActionLabel="@string/action_sign_in_short"
         android:imeOptions="actionDone"
         android:inputType="textPassword"
