@@ -45,4 +45,6 @@ dependencies {
     api "com.squareup.okhttp3:logging-interceptor:$logging_interceptor"
     api "io.reactivex.rxjava2:rxjava:$rxjava"
     api "io.reactivex:rxandroid:$rxandroid"
+
+    api 'com.github.maning0303:MNProgressHUD:V1.1.8'
 }

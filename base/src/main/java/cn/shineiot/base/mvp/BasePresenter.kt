@@ -1,5 +1,6 @@
 package cn.shineiot.base.mvp
 
+import cn.shineiot.base.utils.LogUtil
 import io.reactivex.disposables.CompositeDisposable
 import rx.Observable
 import rx.Subscriber
@@ -23,7 +24,7 @@ open class BasePresenter<T : IBaseView> : IPresenter<T> {
 
     override fun detachView() {
         mRootView = null
-
+        LogUtil.e("detachView")
         //保证activity结束时取消所有正在执行的订阅
         if (!compositeDisposable.isDisposed) {
             compositeDisposable.clear()

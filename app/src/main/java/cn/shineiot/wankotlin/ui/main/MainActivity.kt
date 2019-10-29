@@ -1,13 +1,32 @@
 package cn.shineiot.wankotlin.ui.main
 
-import android.support.v7.app.AppCompatActivity
-import android.os.Bundle
+import cn.shineiot.base.mvp.BaseActivity
 import cn.shineiot.wankotlin.R
 
-class MainActivity : AppCompatActivity() {
+/**
+ * 首页
+ */
+class MainActivity : BaseActivity<MainView,MainPresenter>(),MainView {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+    override fun layoutId(): Int {
+        return R.layout.activity_main
     }
+
+    override fun initPresenter(): MainPresenter? {
+        return MainPresenter()
+    }
+
+    override fun initView() {
+        presenter?.getBanner()
+    }
+    override fun successData() {
+    }
+
+    override fun showLoading() {
+    }
+
+    override fun dismissLoading() {
+    }
+
+
 }

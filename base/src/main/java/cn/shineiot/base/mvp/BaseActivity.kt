@@ -6,6 +6,7 @@ import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.Toolbar
 
 
 /**
@@ -22,7 +23,7 @@ abstract class BaseActivity<V : IBaseView, T : BasePresenter<V>> : AppCompatActi
         super.onCreate(savedInstanceState)
         setContentView(layoutId())
         initPresenter()
-        initData()
+//        initData()
         initView()
         initP()
     }
@@ -40,7 +41,7 @@ abstract class BaseActivity<V : IBaseView, T : BasePresenter<V>> : AppCompatActi
     /**
      * 初始化数据
      */
-    abstract fun initData()
+//    abstract fun initData()
 
     /**
      * 初始化 View
@@ -54,6 +55,9 @@ abstract class BaseActivity<V : IBaseView, T : BasePresenter<V>> : AppCompatActi
         }
     }
 
+    fun setToolBar(toolbar: Toolbar,title: String){
+
+    }
 
     /**
      * 打卡软键盘
