@@ -5,7 +5,6 @@ import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.text.TextUtils
-import android.util.Log
 import android.view.KeyEvent
 import android.widget.Toast
 import cn.shineiot.base.mvp.BaseActivity
@@ -17,7 +16,6 @@ import cn.shineiot.wankotlin.bean.User
 import cn.shineiot.wankotlin.ui.main.MainActivity
 import com.maning.mndialoglibrary.MProgressDialog
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.layout_toast.*
 
 /**
  * login
