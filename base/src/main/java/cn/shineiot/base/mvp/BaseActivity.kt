@@ -2,7 +2,6 @@ package cn.shineiot.base.mvp
 
 import android.content.Context
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.support.v7.app.AppCompatActivity
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -10,22 +9,20 @@ import android.widget.Toolbar
 
 
 /**
- * @author xuhao
- * created: 2017/10/25
- * desc:BaseActivity基类
+ * BaseActivity基类
  */
-@Suppress("UNCHECKED_CAST")
 abstract class BaseActivity<V : IBaseView, T : BasePresenter<V>> : AppCompatActivity() {
+    var mContext : Context? = null
 
     var presenter: T? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layoutId())
-        initPresenter()
-//        initData()
-        initView()
+
+        mContext = this
         initP()
+        initView()
     }
 
     /**
@@ -48,6 +45,7 @@ abstract class BaseActivity<V : IBaseView, T : BasePresenter<V>> : AppCompatActi
      */
     abstract fun initView()
 
+    @Suppress("UNCHECKED_CAST")
     fun initP() {
         presenter = initPresenter()
         if(null != presenter) {
@@ -55,12 +53,12 @@ abstract class BaseActivity<V : IBaseView, T : BasePresenter<V>> : AppCompatActi
         }
     }
 
-    fun setToolBar(toolbar: Toolbar,title: String){
-
-    }
+//    fun setToolBar(toolbar: Toolbar,title: String){
+//
+//    }
 
     /**
-     * 打卡软键盘
+     * 打开软键盘
      */
     fun openKeyBord(mEditText: EditText, mContext: Context) {
         val imm = mContext.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

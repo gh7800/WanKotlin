@@ -1,11 +1,11 @@
 package cn.shineiot.wankotlin.ui.login
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
 import android.text.TextUtils
-import android.view.KeyEvent
 import android.widget.Toast
 import cn.shineiot.base.mvp.BaseActivity
 import cn.shineiot.base.utils.LogUtil
@@ -22,7 +22,6 @@ import kotlinx.android.synthetic.main.activity_login.*
  */
 class LoginActivity : BaseActivity<LoginView.View, LoginPresenter>(), LoginView.View {
 
-    private val mPresenter by lazy { LoginPresenter() } //初始化的时候加载
     private val sPutils by lazy { SPutils() }
 
     //handler的创建方法
@@ -36,7 +35,7 @@ class LoginActivity : BaseActivity<LoginView.View, LoginPresenter>(), LoginView.
     }
 
     override fun initPresenter(): LoginPresenter? {
-        return mPresenter
+        return LoginPresenter()
     }
 
 
@@ -52,50 +51,53 @@ class LoginActivity : BaseActivity<LoginView.View, LoginPresenter>(), LoginView.
             closeKeyBord(username, this)
             val username: String = username.text.toString()
             val password: String = password.text.toString()
-            if (TextUtils.isEmpty(username)) {
-                Toast.makeText(this, "请输入用户名", Toast.LENGTH_SHORT).show()
-            } else if (TextUtils.isEmpty(password)) {
-                Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show()
-            } else {
-                mPresenter.login(username, password)
+            when {
+                TextUtils.isEmpty(username) -> {
+                    Toast.makeText(this, "请输入用户名", Toast.LENGTH_SHORT).show()
+                }
+                TextUtils.isEmpty(password) -> {
+                    Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show()
+                }
+                else -> {
+                    LogUtil.e("showloading${Thread.currentThread()}")
+                    showLoading()
+                    presenter?.login(username, password)
+                }
             }
         }
     }
 
-    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        return super.onKeyDown(keyCode, event)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-//        mPresenter.detachView()
-    }
-
+    @SuppressLint("SetTextI18n")
     override fun successData(user: User) {
-        LogUtil.e("success--$user")
-//        ToastUtils.DEFAULT.show("登录成功")
-        ToastUtils.newBuilder(R.layout.layout_toast,R.id.tv_toast).build().show("登录成功")
+        LogUtil.e("showloading${Thread.currentThread()}")
 
-        var username = user.username
-        sPutils.saveValue("username",username)
-        var name = sPutils.getString("username")
-        LogUtil.e("name--$name")
-        var intent = Intent(this,MainActivity::class.java)
+        //ToastUtils.DEFAULT.show("登录成功")
+
+        val usernames = user.username
+        sPutils.saveValue("username",usernames)
+        val name = sPutils.getString("username")
+        val intent = Intent(this,MainActivity::class.java)
         startActivity(intent)
         finish()
+
+//        username.setText("---$usernames")
     }
 
     override fun showLoading() {
-        MProgressDialog.showProgress(this)
+        MProgressDialog.showProgress(mContext)
     }
 
     override fun dismissLoading() {
         mHandler.postDelayed({
             MProgressDialog.dismissProgress()
-            var msg = Message()
+            val msg = Message()
             msg.obj = "message-1"
             mHandler.sendMessage(msg)
-        }, 1000)
+        }, 0)
+
+    }
+
+    override fun errorMsg(msg: String?) {
 
     }
 

@@ -19,18 +19,18 @@ import cn.shineiot.base.BaseApplication
  *
  * AUTHOR: haoge
  */
-class ToastUtils private constructor(private val builder:Builder) {
+class ToastUtils private constructor(private val builder: Builder) {
 
     private val context: Context = BaseApplication.context
-    private var toast:Toast? = null
-    private var tv:TextView? = null
-    private var container:View? = null
+    private var toast: Toast? = null
+    private var tv: TextView? = null
+    private var container: View? = null
 
-    fun show(resId:Int) {
+    fun show(resId: Int) {
         show(context.getString(resId))
     }
 
-    fun show(message:String?, vararg any: Any) {
+    fun show(message: String?, vararg any: Any) {
         if (TextUtils.isEmpty(message)) {
             return
         }
@@ -48,7 +48,7 @@ class ToastUtils private constructor(private val builder:Builder) {
     }
 
     /** 获取Toast的View进行使用，只支持自定义样式的Toast，若为系统默认Toast样式，则返回null*/
-    fun getView():View? {
+    fun getView(): View? {
         if (container == null && builder.isDefault.not()) {
             createToastIfNeeded()
         }
@@ -73,7 +73,8 @@ class ToastUtils private constructor(private val builder:Builder) {
             if (builder.isDefault) {
                 toast = Toast.makeText(context, "", builder.duration)
             } else {
-                container = builder.layout?:LayoutInflater.from(context).inflate(builder.layoutId, null)
+                container =
+                    builder.layout ?: LayoutInflater.from(context).inflate(builder.layoutId, null)
                 tv = container?.findViewById(builder.tvId)
                 toast = Toast(context)
                 toast?.view = container
@@ -95,30 +96,31 @@ class ToastUtils private constructor(private val builder:Builder) {
         @JvmStatic
         val DEFAULT: ToastUtils by lazy { return@lazy newBuilder().build() }
 
-        @JvmStatic
-        fun newBuilder():Builder {
+        private fun newBuilder(): Builder {
             return Builder(isDefault = true)
         }
-        @JvmStatic
-        fun newBuilder(layoutId: Int, tvId: Int):Builder {
+
+        fun newBuilder(layoutId: Int, tvId: Int): Builder {
             return Builder(isDefault = false, layoutId = layoutId, tvId = tvId)
         }
-        @JvmStatic
-        fun newBuilder(layout:View, tvId: Int):Builder {
+
+        private fun newBuilder(layout: View, tvId: Int): Builder {
             assert(layout.parent == null)
             return Builder(isDefault = false, layout = layout, tvId = tvId)
         }
     }
 
-    class Builder internal constructor(internal var isDefault: Boolean,
-                                       internal var layout:View? = null,
-                                       internal var layoutId: Int = 0,
-                                       internal var tvId: Int = 0) {
+    class Builder internal constructor(
+        internal var isDefault: Boolean,
+        internal var layout: View? = null,
+        internal var layoutId: Int = 0,
+        internal var tvId: Int = 0
+    ) {
 
-        internal var duration:Int = Toast.LENGTH_SHORT
-        internal var gravity:Int = 0
-        internal var offsetX:Int = 0
-        internal var offsetY:Int = 0
+        internal var duration: Int = Toast.LENGTH_SHORT
+        internal var gravity: Int = 0
+        internal var offsetX: Int = 0
+        internal var offsetY: Int = 0
 
         fun setGravity(gravity: Int, offsetX: Int, offsetY: Int): Builder {
             this.gravity = gravity
@@ -127,12 +129,12 @@ class ToastUtils private constructor(private val builder:Builder) {
             return this
         }
 
-        fun setDuration(duration:Int): Builder {
+        fun setDuration(duration: Int): Builder {
             this.duration = duration
             return this
         }
 
-        fun build():ToastUtils {
+        fun build(): ToastUtils {
             return ToastUtils(this)
         }
     }

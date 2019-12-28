@@ -16,25 +16,18 @@ class LoginPresenter : BasePresenter<LoginView.View>() {
 
         RetrofitManager.service.login(username, password)
             .subscribeOn(Schedulers.io())
-            .subscribeOn(AndroidSchedulers.mainThread())
+            .unsubscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Subscriber<BaseResult<User>>() {
-                override fun onStart() {
-                    super.onStart()
-                    mRootView?.showLoading()
-                }
-
                 override fun onNext(result: BaseResult<User>?) {
-                    var code = result?.errorCode
+                    mRootView?.dismissLoading()
+                    val code = result?.errorCode
                     if (code == 0) {
-                        LogUtil.e("11111111")
-                        var user: User = result?.data!!
+                        val user: User = result.data
                         mRootView?.successData(user)
                     } else {
-                        LogUtil.e("11111111222222222222222")
-
                         ToastUtils.DEFAULT.show(result?.errorMsg)
                     }
-                    mRootView?.dismissLoading()
                 }
 
                 override fun onCompleted() {

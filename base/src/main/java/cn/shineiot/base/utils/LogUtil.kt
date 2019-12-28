@@ -10,7 +10,7 @@ class LogUtil {
     companion object {
         private const val tag = "tag"
 
-        fun e(msg: Any) {
+        fun e(msg: Any?) {
             Log.e(tag, "$msg")
         }
 
