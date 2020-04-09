@@ -5,4 +5,15 @@
     <color name="colorAccent">#D81B60</color>
 
     <color name="transparent">#00000000</color>
+
+    <color name="main">#33ccff</color>
+    <color name="main_press">#0fafeb</color>
+
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="gray">#808080</color>
+    <color name="red">#FF0000</color>
+    <color name="blue">#ff33b5e5</color>
+    <color name="green">#008000</color>
 </resources>

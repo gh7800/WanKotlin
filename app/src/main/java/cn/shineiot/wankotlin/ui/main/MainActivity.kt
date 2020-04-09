@@ -25,6 +25,8 @@ class MainActivity : BaseActivity<MainView, MainPresenter>(), MainView {
     override fun initView() {
         bannerView.setImageLoader(GlideImageLoader())
         bannerView.setIndicatorGravity(BannerConfig.RIGHT)
+        bottomNavigationView.itemIconTintList = null;
+//        bottomNavigationView.animation = false;
         presenter?.getBanner()
     }
 

@@ -13,5 +13,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="@id/bannerView"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        />
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:ignore="MissingConstraints"
+        app:menu="@menu/navigation"
+        android:background="?android:attr/windowBackground"
+        />
 
 </android.support.constraint.ConstraintLayout>
