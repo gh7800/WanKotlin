@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import cn.shineiot.base.utils.LogUtil
 
 /**
  * @author Xuhao
@@ -21,7 +22,7 @@ import android.view.ViewGroup
     /**
      * 视图是否加载完毕
      */
-    private var isViewPrepare = false
+    private var isViewPrepare = true
     /**
      * 数据是否加载过了
      */
@@ -32,20 +33,23 @@ import android.view.ViewGroup
     }
 
 
-
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
+//        LogUtil.e(isVisibleToUser)
         if (isVisibleToUser) {
-            lazyLoadDataIfPrepared()
+//            lazyLoadDataIfPrepared()
+            LogUtil.e("-------------------------------------")
+            lazyLoad()
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        isViewPrepare = true
-        initView()
-        lazyLoadDataIfPrepared()
+//        LogUtil.e("onViewCreate")
         initP()
+        initView()
+//        isViewPrepare = true
+//        lazyLoadDataIfPrepared()
     }
 
     /**
@@ -53,7 +57,7 @@ import android.view.ViewGroup
      */
     abstract fun initPresenter(): T?
 
-    fun initP() {
+    private fun initP() {
         presenter = initPresenter()
         if(null != presenter) {
             presenter!!.attachView(this as V)
@@ -61,15 +65,16 @@ import android.view.ViewGroup
     }
 
     private fun lazyLoadDataIfPrepared() {
-        if (userVisibleHint && isViewPrepare && !hasLoadData) {
             lazyLoad()
+        LogUtil.e(""+userVisibleHint+isViewPrepare+hasLoadData)
+        if (userVisibleHint && isViewPrepare && !hasLoadData) {
             hasLoadData = true
         }
     }
 
-    open val mRetryClickListener: View.OnClickListener = View.OnClickListener {
+    /*open val mRetryClickListener: View.OnClickListener = View.OnClickListener {
         lazyLoad()
-    }
+    }*/
 
 
     /**

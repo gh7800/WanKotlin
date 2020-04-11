@@ -29,7 +29,7 @@ class HomeFragment : BaseFragment<HomeView, HomePresenter>(),HomeView {
     }
 
     override fun lazyLoad() {
-
+//        presenter?.getBanner()
     }
 
     override fun successBanner(banners: List<Banner>) {

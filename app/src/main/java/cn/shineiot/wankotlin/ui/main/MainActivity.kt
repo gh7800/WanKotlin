@@ -1,13 +1,13 @@
 package cn.shineiot.wankotlin.ui.main
 
+import android.os.Build
+import android.support.annotation.RequiresApi
 import android.support.design.widget.BottomNavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import android.view.View
-import android.view.ViewGroup
 import cn.shineiot.base.mvp.BaseActivity
 import cn.shineiot.base.utils.LogUtil
 import cn.shineiot.base.utils.ToastUtils
@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 /**
  * 首页
  */
-class MainActivity(fm: FragmentManager) : BaseActivity<MainView, MainPresenter>(), MainView {
+class MainActivity : BaseActivity<MainView, MainPresenter>(), MainView {
 
     companion object {
         val fragments = ArrayList<Fragment>()
@@ -34,6 +34,7 @@ class MainActivity(fm: FragmentManager) : BaseActivity<MainView, MainPresenter>(
         return MainPresenter()
     }
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun initView() {
 
         //消除图标是色块的问题，建议图标背景色为透明
@@ -43,25 +44,21 @@ class MainActivity(fm: FragmentManager) : BaseActivity<MainView, MainPresenter>(
         for (index in 1..4) {
             val fragment = HomeFragment()
             fragments.add(fragment)
-
-//            navigationMenu.add(bottomNavigationView.menu.getItem(index).actionView)
         }
 
-//        val fmg = supportFragmentManager
-//        val pagerAdapter = ViewPagerAdapter()
         viewPager.addOnPageChangeListener(viewPagerChangeListener)
-//        viewPager.adapter = ViewPagerAdapter(supportFragmentManager)
-        viewPager.offscreenPageLimit = 2
-        viewPager.currentItem = 0
+        viewPager.adapter = ViewPagerAdapter(supportFragmentManager)
+//        viewPager.offscreenPageLimit = 3
+        viewPager.stopNestedScroll()
     }
 
     class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
-        private var fm: FragmentManager? = null
+        /*private var fm: FragmentManager? = null
 
         init {
             this.fm = fm
-        }
+        }*/
 
         override fun getItem(p0: Int): Fragment {
             return fragments[p0]
@@ -76,13 +73,13 @@ class MainActivity(fm: FragmentManager) : BaseActivity<MainView, MainPresenter>(
 
     private val viewPagerChangeListener = object : ViewPager.OnPageChangeListener {
         override fun onPageScrollStateChanged(p0: Int) {
-            bottomNavigationView.menu.getItem(p0).isChecked = true;
         }
 
         override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {
         }
 
         override fun onPageSelected(p0: Int) {
+            bottomNavigationView.menu.getItem(p0).isChecked = true;
         }
 
     }
