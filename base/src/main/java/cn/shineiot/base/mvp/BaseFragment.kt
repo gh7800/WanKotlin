@@ -16,36 +16,39 @@ import cn.shineiot.base.utils.LogUtil
  * desc:
  */
 
- abstract class BaseFragment<V : IBaseView, T : BasePresenter<V>>: Fragment(){
+abstract class BaseFragment<V : IBaseView, T : BasePresenter<V>> : Fragment() {
 
-    var presenter : T? = null
+    var presenter: T? = null
+
     /**
      * 视图是否加载完毕
      */
     private var isViewPrepare = true
+
     /**
      * 数据是否加载过了
      */
     private var hasLoadData = false
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(getLayoutId(),null)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(getLayoutId(), null)
     }
 
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
-//        LogUtil.e(isVisibleToUser)
         if (isVisibleToUser) {
 //            lazyLoadDataIfPrepared()
-            LogUtil.e("-------------------------------------")
             lazyLoad()
         }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        LogUtil.e("onViewCreate")
         initP()
         initView()
 //        isViewPrepare = true
@@ -59,14 +62,11 @@ import cn.shineiot.base.utils.LogUtil
 
     private fun initP() {
         presenter = initPresenter()
-        if(null != presenter) {
-            presenter!!.attachView(this as V)
-        }
+        presenter?.attachView(this as V)
     }
 
     private fun lazyLoadDataIfPrepared() {
-            lazyLoad()
-        LogUtil.e(""+userVisibleHint+isViewPrepare+hasLoadData)
+        lazyLoad()
         if (userVisibleHint && isViewPrepare && !hasLoadData) {
             hasLoadData = true
         }
@@ -81,7 +81,7 @@ import cn.shineiot.base.utils.LogUtil
      * 加载布局
      */
     @LayoutRes
-    abstract fun getLayoutId():Int
+    abstract fun getLayoutId(): Int
 
     /**
      * 初始化 ViewI
@@ -96,6 +96,7 @@ import cn.shineiot.base.utils.LogUtil
     override fun onDestroy() {
         super.onDestroy()
         presenter?.detachView()
+        this.presenter = null
     }
 
 }

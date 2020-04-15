@@ -29,7 +29,7 @@ class HomeFragment : BaseFragment<HomeView, HomePresenter>(),HomeView {
     }
 
     override fun lazyLoad() {
-//        presenter?.getBanner()
+
     }
 
     override fun successBanner(banners: List<Banner>) {
@@ -51,7 +51,6 @@ class HomeFragment : BaseFragment<HomeView, HomePresenter>(),HomeView {
     }
 
     override fun errorMsg(msg: String?) {
-        LogUtil.e(msg)
         ToastUtils.DEFAULT.show(msg)
     }
 }

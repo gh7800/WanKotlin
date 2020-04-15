@@ -20,5 +20,6 @@ interface HttpService {
     fun login(@Field("username")username: String,@Field("password")password: String) : Observable<BaseResult<User>>
 
     @GET("banner/json")
+//    suspend fun getBanner():BaseListResult<Banner>
     fun getBanner():Observable<BaseListResult<Banner>>
 }

@@ -2,6 +2,7 @@ package cn.shineiot.wankotlin.ui.login
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
@@ -59,7 +60,7 @@ class LoginActivity : BaseActivity<LoginView.View, LoginPresenter>(), LoginView.
                     Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
-                    LogUtil.e("showloading${Thread.currentThread()}")
+                    //LogUtil.e("showloading${Thread.currentThread()}")
                     showLoading()
                     presenter?.login(username, password)
                 }
@@ -71,8 +72,6 @@ class LoginActivity : BaseActivity<LoginView.View, LoginPresenter>(), LoginView.
     override fun successData(user: User) {
         LogUtil.e("showloading${Thread.currentThread()}")
 
-        //ToastUtils.DEFAULT.show("登录成功")
-
         val usernames = user.username
         sPutils.saveValue("username",usernames)
         val name = sPutils.getString("username")
@@ -80,7 +79,6 @@ class LoginActivity : BaseActivity<LoginView.View, LoginPresenter>(), LoginView.
         startActivity(intent)
         finish()
 
-//        username.setText("---$usernames")
     }
 
     override fun showLoading() {

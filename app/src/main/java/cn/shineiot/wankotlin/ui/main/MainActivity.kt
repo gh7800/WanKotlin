@@ -12,7 +12,10 @@ import cn.shineiot.base.mvp.BaseActivity
 import cn.shineiot.base.utils.LogUtil
 import cn.shineiot.base.utils.ToastUtils
 import cn.shineiot.wankotlin.R
+import cn.shineiot.wankotlin.ui.fragments.blog.BlogFragment
 import cn.shineiot.wankotlin.ui.fragments.home.HomeFragment
+import cn.shineiot.wankotlin.ui.fragments.knowledge.KnowledgeFragment
+import cn.shineiot.wankotlin.ui.fragments.navigation.NavigationFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -41,24 +44,22 @@ class MainActivity : BaseActivity<MainView, MainPresenter>(), MainView {
         bottomNavigationView.itemIconTintList = null
         bottomNavigationView.setOnNavigationItemSelectedListener(listener)
 
-        for (index in 1..4) {
-            val fragment = HomeFragment()
-            fragments.add(fragment)
-        }
+        val homeFragment = HomeFragment()
+        val blogFragment = BlogFragment()
+        val knowledgeFragment = KnowledgeFragment()
+        val navigationFragment = NavigationFragment()
+
+        fragments.add(homeFragment)
+        fragments.add(blogFragment)
+        fragments.add(knowledgeFragment)
+        fragments.add(navigationFragment)
 
         viewPager.addOnPageChangeListener(viewPagerChangeListener)
         viewPager.adapter = ViewPagerAdapter(supportFragmentManager)
 //        viewPager.offscreenPageLimit = 3
-        viewPager.stopNestedScroll()
     }
 
     class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
-
-        /*private var fm: FragmentManager? = null
-
-        init {
-            this.fm = fm
-        }*/
 
         override fun getItem(p0: Int): Fragment {
             return fragments[p0]
