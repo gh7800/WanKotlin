@@ -3,12 +3,11 @@
 package cn.shineiot.base.mvp
 
 import android.os.Bundle
-import android.support.annotation.LayoutRes
-import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import cn.shineiot.base.utils.LogUtil
+import androidx.annotation.LayoutRes
+import androidx.fragment.app.Fragment
 
 /**
  * @author Xuhao

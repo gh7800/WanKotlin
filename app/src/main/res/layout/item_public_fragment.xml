@@ -5,13 +5,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:text="NAVIGATION_FRAGMENT"
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingTop="@dimen/dp_10"
+        android:text="1111111111111111111"
         />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/author"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        android:paddingBottom="@dimen/dp_10"
+        />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,6 @@ package cn.shineiot.wankotlin.ui.login
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
@@ -11,7 +10,6 @@ import android.widget.Toast
 import cn.shineiot.base.mvp.BaseActivity
 import cn.shineiot.base.utils.LogUtil
 import cn.shineiot.base.utils.SPutils
-import cn.shineiot.base.utils.ToastUtils
 import cn.shineiot.wankotlin.R
 import cn.shineiot.wankotlin.bean.User
 import cn.shineiot.wankotlin.ui.main.MainActivity

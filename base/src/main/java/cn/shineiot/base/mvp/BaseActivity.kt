@@ -2,10 +2,9 @@ package cn.shineiot.base.mvp
 
 import android.content.Context
 import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.Toolbar
+import androidx.appcompat.app.AppCompatActivity
 
 
 /**

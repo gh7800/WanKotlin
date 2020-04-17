@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -12,14 +13,29 @@
         app:layout_constraintLeft_toLeftOf="parent"
         />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/home_recyclerView"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/home_tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+        app:layout_constraintTop_toBottomOf="@id/bannerView"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:tabSelectedTextColor="@color/blue"
+        app:tabMinWidth="@dimen/dp_40"
+        app:tabIndicatorColor="@color/blue"
+        app:tabMode="scrollable"
+        app:tabGravity="center"
+        app:tabBackground="@color/f2"
+        />
+
+    <TableLayout
+        android:id="@+id/home_frameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_tab_layout"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/bannerView"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+        />
 
-</android.support.constraint.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

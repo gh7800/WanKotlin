@@ -1,13 +1,12 @@
 package cn.shineiot.wankotlin.ui.main
 
 import android.os.Build
-import android.support.annotation.RequiresApi
-import android.support.design.widget.BottomNavigationView
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentPagerAdapter
-import android.support.v4.view.ViewPager
 import android.view.View
+import androidx.annotation.RequiresApi
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
+import androidx.viewpager.widget.ViewPager
 import cn.shineiot.base.mvp.BaseActivity
 import cn.shineiot.base.utils.LogUtil
 import cn.shineiot.base.utils.ToastUtils
@@ -16,6 +15,7 @@ import cn.shineiot.wankotlin.ui.fragments.blog.BlogFragment
 import cn.shineiot.wankotlin.ui.fragments.home.HomeFragment
 import cn.shineiot.wankotlin.ui.fragments.knowledge.KnowledgeFragment
 import cn.shineiot.wankotlin.ui.fragments.navigation.NavigationFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -39,7 +39,6 @@ class MainActivity : BaseActivity<MainView, MainPresenter>(), MainView {
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun initView() {
-
         //消除图标是色块的问题，建议图标背景色为透明
         bottomNavigationView.itemIconTintList = null
         bottomNavigationView.setOnNavigationItemSelectedListener(listener)

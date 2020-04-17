@@ -11,7 +11,6 @@ import rx.schedulers.Schedulers
 
 class HomePresenter : BasePresenter<HomeView>() {
     fun getBanner() {
-        LogUtil.e("xxx")
         RetrofitManager.service.getBanner()
             .subscribeOn(Schedulers.io())
             .unsubscribeOn(Schedulers.io())

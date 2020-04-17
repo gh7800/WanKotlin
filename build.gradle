@@ -24,7 +24,7 @@ buildscript {
         glide = '4.7.1'
         banner = '1.4.10'
         MNProgressHUD = 'V1.1.8'
-        BaseRecyclerViewAdapterHelper = '2.9.50'
+        BaseRecyclerViewAdapterHelper = '2.9.47-androidx'
 
     }
     repositories {

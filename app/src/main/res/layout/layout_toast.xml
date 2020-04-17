@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/layoutToast"
     android:gravity="center"
     android:background="@drawable/bg_circle_layout"
@@ -7,13 +7,13 @@
     android:layout_width="match_parent"
     android:layout_height="58dp">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_taost"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:background="@mipmap/ic_launcher_round"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tv_toast"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,4 +21,4 @@
         android:layout_marginLeft="16dp"
         android:textSize="16sp"
         android:text="@string/app_name" />
-</LinearLayout>
+</androidx.appcompat.widget.LinearLayoutCompat>

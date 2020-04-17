@@ -3,11 +3,10 @@ package cn.shineiot.wankotlin.http
 import cn.shineiot.base.mvp.BaseListResult
 import cn.shineiot.base.mvp.BaseResult
 import cn.shineiot.wankotlin.bean.Banner
+import cn.shineiot.wankotlin.bean.Project
+import cn.shineiot.wankotlin.bean.Public
 import cn.shineiot.wankotlin.bean.User
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 import rx.Observable
 
 /**
@@ -22,4 +21,10 @@ interface HttpService {
     @GET("banner/json")
 //    suspend fun getBanner():BaseListResult<Banner>
     fun getBanner():Observable<BaseListResult<Banner>>
+
+    @GET("article/list/{page}/json")
+    fun getPublic(@Path("page")page:Int):Observable<BaseListResult<Public>>
+
+    @GET("project/list/{page}/json")
+    fun getProject(@Path("page")page:Int):Observable<BaseListResult<Project>>
 }
