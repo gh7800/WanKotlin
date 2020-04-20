@@ -25,8 +25,9 @@ abstract class BaseActivity : AppCompatActivity() {
         actionBar?.setDisplayShowHomeEnabled(true)
         actionBar?.setDisplayUseLogoEnabled(true)
         actionBar?.setDefaultDisplayHomeAsUpEnabled(true)
-        actionBar?.setIcon(R.drawable.black_background)
+        actionBar?.setIcon(R.drawable.ic_launcher_round)
         toolbar_title.text = title
+        actionBar?.setHomeButtonEnabled(true)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

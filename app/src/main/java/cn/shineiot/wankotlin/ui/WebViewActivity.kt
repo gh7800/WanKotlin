@@ -2,6 +2,7 @@ package cn.shineiot.wankotlin.ui
 
 import androidx.appcompat.widget.LinearLayoutCompat
 import cn.shineiot.base.mvp.BaseActivity
+import cn.shineiot.base.utils.LogUtil
 import cn.shineiot.wankotlin.R
 import com.just.agentweb.AgentWeb
 import kotlinx.android.synthetic.main.activity_webview.*
@@ -25,4 +26,9 @@ class WebViewActivity : BaseActivity() {
             .go(path)
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        LogUtil.e("onSupportNavigateUp")
+        finish()
+        return super.onSupportNavigateUp()
+    }
 }
