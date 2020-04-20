@@ -7,7 +7,7 @@ import android.os.Looper
 import android.os.Message
 import android.text.TextUtils
 import android.widget.Toast
-import cn.shineiot.base.mvp.BaseActivity
+import cn.shineiot.base.mvp.BaseMVPActivity
 import cn.shineiot.base.utils.LogUtil
 import cn.shineiot.base.utils.SPutils
 import cn.shineiot.wankotlin.R
@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 /**
  * login
  */
-class LoginActivity : BaseActivity<LoginView.View, LoginPresenter>(), LoginView.View {
+class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginView.View {
 
     private val sPutils by lazy { SPutils() }
 

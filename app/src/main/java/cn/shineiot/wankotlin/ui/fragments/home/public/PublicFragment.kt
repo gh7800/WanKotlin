@@ -1,16 +1,21 @@
 package cn.shineiot.wankotlin.ui.fragments.home.public
 
+import android.content.Intent
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.shineiot.base.mvp.BaseFragment
-import cn.shineiot.base.utils.LogUtil
+import cn.shineiot.base.utils.ToastUtils
 import cn.shineiot.wankotlin.R
 import cn.shineiot.wankotlin.bean.Public
+import cn.shineiot.wankotlin.ui.WebViewActivity
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import kotlinx.android.synthetic.main.fragment_public.*
 
-class PublicFragment :BaseFragment<PublicView,PublicPresenter>(),PublicView{
+class PublicFragment :BaseFragment<PublicView,PublicPresenter>(),PublicView,OnItemClickListener{
     private val page : Int = 1   //第x页
-    private var adapter : PublicAdapter? = null
-    var data = arrayListOf<Public>()
+    private lateinit var adapter : PublicAdapter
 
     override fun initPresenter(): PublicPresenter? {
         return PublicPresenter()
@@ -23,9 +28,9 @@ class PublicFragment :BaseFragment<PublicView,PublicPresenter>(),PublicView{
     override fun initView() {
 
         publicRecyclerView.layoutManager = LinearLayoutManager(context)
-        adapter = PublicAdapter(R.layout.item_public_fragment,data)
+        adapter = PublicAdapter(R.layout.item_public_fragment)
         publicRecyclerView.adapter = adapter
-//        adapter?.setEnableLoadMore(false)
+        adapter.setOnItemClickListener(this)
 
         presenter?.getPublic(page)
     }
@@ -34,8 +39,7 @@ class PublicFragment :BaseFragment<PublicView,PublicPresenter>(),PublicView{
     }
 
     override fun successData(data: List<Public>) {
-        LogUtil.e(data)
-        adapter?.setNewData(data)
+        adapter.addData(data)
     }
 
     override fun showLoading() {
@@ -47,6 +51,14 @@ class PublicFragment :BaseFragment<PublicView,PublicPresenter>(),PublicView{
     }
 
     override fun errorMsg(msg: String?) {
+        ToastUtils.DEFAULT.show(msg)
+    }
 
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        val item  = adapter.getItem(position) as Public
+        val intent = Intent()
+        intent.setClass(activity,WebViewActivity::class.java)
+        intent.putExtra("path",item.link)
+        startActivity(intent)
     }
 }

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="88dp"
+    android:paddingTop="5dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -10,8 +12,9 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:paddingTop="@dimen/dp_10"
-        android:text="1111111111111111111"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:paddingLeft="10dp"
         />
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/author"
@@ -19,8 +22,16 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title"
-        android:paddingBottom="@dimen/dp_10"
+        android:layout_marginTop="15dp"
+        android:paddingLeft="10dp"
+        android:textSize="12sp"
+        android:textColor="@color/gray"
         />
-
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:background="@color/gray"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

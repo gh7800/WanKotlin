@@ -83,7 +83,7 @@ class NetworkUtil{
                 result = true
             } catch (e: IOException) {
             } finally {
-                if (null != httpUrl) {
+                if (null !== httpUrl) {
                     httpUrl.disconnect()
                 }
             }

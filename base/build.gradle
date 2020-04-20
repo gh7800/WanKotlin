@@ -53,5 +53,6 @@ dependencies {
     api "com.github.CymChad:BaseRecyclerViewAdapterHelper:$BaseRecyclerViewAdapterHelper"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinx_coroutines_android"
     api 'androidx.appcompat:appcompat:1.1.0'
+    api "com.just.agentweb:agentweb:$agentweb"
 
 }

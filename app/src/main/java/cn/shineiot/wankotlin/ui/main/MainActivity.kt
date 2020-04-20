@@ -7,7 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
-import cn.shineiot.base.mvp.BaseActivity
+import cn.shineiot.base.mvp.BaseMVPActivity
 import cn.shineiot.base.utils.LogUtil
 import cn.shineiot.base.utils.ToastUtils
 import cn.shineiot.wankotlin.R
@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 /**
  * 首页
  */
-class MainActivity : BaseActivity<MainView, MainPresenter>(), MainView {
+class MainActivity : BaseMVPActivity<MainView, MainPresenter>(), MainView {
 
     companion object {
         val fragments = ArrayList<Fragment>()

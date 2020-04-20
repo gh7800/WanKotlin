@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 class HomeFragment : BaseFragment<HomeView, HomePresenter>(), HomeView {
     private val tabTitle = arrayOf("公众号", "项目")
     private val fragments = arrayListOf<Fragment>()
-    private var currentFragment: Fragment? = null
+    private var currentFragment: Fragment ?= null
 
     override fun initPresenter(): HomePresenter? {
         return HomePresenter()
@@ -48,7 +48,7 @@ class HomeFragment : BaseFragment<HomeView, HomePresenter>(), HomeView {
             }
 
             override fun onTabSelected(p0: TabLayout.Tab?) {
-                var index = p0?.position
+                val index = p0?.position
                 LogUtil.e(index)
                 smartReplaceFragment(fragments[index!!])
             }

@@ -14,8 +14,9 @@ import kotlinx.android.synthetic.main.include_toolbar.*
 /**
  * BaseActivity基类
  */
-abstract class BaseActivity : AppCompatActivity() {
-    private var mContext: Context? = null
+abstract class BaseMVPActivity<V : IBaseView, T : BasePresenter<V>> : AppCompatActivity() {
+    var mContext: Context? = null
+    var presenter: T? = null
 
     @SuppressLint("RestrictedApi")
     fun setToolbar(toolbar: Toolbar, title: String) {
@@ -34,6 +35,7 @@ abstract class BaseActivity : AppCompatActivity() {
         setContentView(layoutId())
 
         mContext = this
+        initP()
         initView()
     }
 
@@ -42,6 +44,10 @@ abstract class BaseActivity : AppCompatActivity() {
      */
     abstract fun layoutId(): Int
 
+    /**
+     * 初始化presenter
+     */
+    abstract fun initPresenter(): T?
 
     /**
      * 初始化数据
@@ -53,6 +59,13 @@ abstract class BaseActivity : AppCompatActivity() {
      */
     abstract fun initView()
 
+    @Suppress("UNCHECKED_CAST")
+    fun initP() {
+        presenter = initPresenter()
+        if (null != presenter) {
+            presenter!!.attachView(this as V)
+        }
+    }
 
     /**
      * 打开软键盘
@@ -74,6 +87,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        presenter?.detachView()
     }
 
 }
