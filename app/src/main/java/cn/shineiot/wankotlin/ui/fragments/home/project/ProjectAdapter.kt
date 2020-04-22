@@ -5,9 +5,13 @@ import cn.shineiot.wankotlin.R
 import cn.shineiot.wankotlin.bean.Public
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.module.LoadMoreModule
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 
-class ProjectAdapter(layoutRes:Int) :BaseQuickAdapter<Public, BaseViewHolder>(layoutRes) {
+/**
+ * 实现加载更多module
+ */
+class ProjectAdapter(layoutRes:Int) :BaseQuickAdapter<Public, BaseViewHolder>(layoutRes) ,LoadMoreModule{
 
     override fun convert(helper: BaseViewHolder, item: Public) {
         helper.setText(R.id.project_textView,item.title)

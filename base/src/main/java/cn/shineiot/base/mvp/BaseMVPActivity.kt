@@ -23,10 +23,10 @@ abstract class BaseMVPActivity<V : IBaseView, T : BasePresenter<V>> : AppCompatA
         setSupportActionBar(toolbar)
         val actionBar = supportActionBar
         actionBar?.setDisplayShowTitleEnabled(false)
-        actionBar?.setDisplayShowHomeEnabled(true)
         actionBar?.setDisplayUseLogoEnabled(true)
-        actionBar?.setDefaultDisplayHomeAsUpEnabled(true)
-        actionBar?.setIcon(R.drawable.black_background)
+        actionBar?.setDisplayShowHomeEnabled(true)
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+
         toolbar_title.text = title
     }
 

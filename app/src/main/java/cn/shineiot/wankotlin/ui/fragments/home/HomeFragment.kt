@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
  * 首页fragment
  */
 class HomeFragment : BaseFragment<HomeView, HomePresenter>(), HomeView {
-    private val tabTitle = arrayOf("公众号", "项目")
+    private val tabTitle = arrayOf("最新博文", "最新项目")
     private val fragments = arrayListOf<Fragment>()
     private var currentFragment: Fragment ?= null
 
