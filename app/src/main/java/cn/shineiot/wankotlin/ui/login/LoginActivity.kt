@@ -58,7 +58,6 @@ class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginVi
                     Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show()
                 }
                 else -> {
-                    //LogUtil.e("showloading${Thread.currentThread()}")
                     showLoading()
                     presenter?.login(username, password)
                 }
@@ -80,12 +79,12 @@ class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginVi
     }
 
     override fun showLoading() {
-        MProgressDialog.showProgress(mContext)
+       // MProgressDialog.showProgress(mContext)
     }
 
     override fun dismissLoading() {
         mHandler.postDelayed({
-            MProgressDialog.dismissProgress()
+            //MProgressDialog.dismissProgress()
             val msg = Message()
             msg.obj = "message-1"
             mHandler.sendMessage(msg)

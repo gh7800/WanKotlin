@@ -41,11 +41,11 @@ open class BasePresenter<T : IBaseView> : IPresenter<T> {
     private class MvpViewNotAttachedException internal constructor() :
         RuntimeException("Please call IPresenter.attachView(IBaseView) before" + " requesting data to the IPresenter")
 
-    fun addSubscription(observable: Observable<*>,subscriber: Subscriber<BaseResult<T>>) {
+    /*fun addSubscription(observable: Observable<*>,subscriber: Subscriber<BaseResult<T>>) {
         observable
             .subscribeOn(Schedulers.io())
             .unsubscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 //            .subscribe(subscriber)
-    }
+    }*/
 }
