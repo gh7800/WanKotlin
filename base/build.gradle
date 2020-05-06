@@ -54,5 +54,6 @@ dependencies {
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinx_coroutines_android"
     api 'androidx.appcompat:appcompat:1.1.0'
     api "com.just.agentweb:agentweb:$agentweb"
+    api 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
 
 }

@@ -8,18 +8,18 @@
             app:showAsAction="always"
             />
         <item android:id="@+id/blog"
-            android:title="博客"
+            android:title="收藏"
             android:icon="@drawable/ic_launcher"
             android:enabled="true"
             app:showAsAction="always"
             />
         <item android:id="@+id/knowledge"
-            android:title="体系"
+            android:title="问答"
             android:icon="@drawable/ic_launcher"
             android:enabled="true"
             app:showAsAction="always"/>
         <item android:id="@+id/navigation"
-            android:title="导航"
+            android:title="我的"
             android:icon="@drawable/ic_launcher"
             android:enabled="true"
             app:showAsAction="always"/>

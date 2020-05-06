@@ -34,4 +34,54 @@ class PublicPresenter :BasePresenter<PublicView>() {
 
             })
     }
+
+    fun collect(id:Int){
+        RetrofitManager.service.collect(id)
+            .subscribeOn(Schedulers.io())
+            .unsubscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object :Subscriber<BaseResult<Public>>(){
+                override fun onNext(result: BaseResult<Public>?) {
+                    if(result?.errorCode == 0){
+                        mRootView?.SuccessCollect()
+                    }else{
+                        mRootView?.errorMsg(result?.errorMsg)
+                    }
+                }
+
+                override fun onCompleted() {
+
+                }
+
+                override fun onError(e: Throwable?) {
+                    mRootView?.errorMsg(e?.message)
+                }
+
+            })
+    }
+
+    fun unCollect(id:Int){
+        RetrofitManager.service.uncollect(id)
+            .subscribeOn(Schedulers.io())
+            .unsubscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(object :Subscriber<BaseResult<Public>>(){
+                override fun onNext(result: BaseResult<Public>?) {
+                    if(result?.errorCode == 0){
+                        mRootView?.SuccessUnCollect()
+                    }else{
+                        mRootView?.errorMsg(result?.errorMsg)
+                    }
+                }
+
+                override fun onCompleted() {
+
+                }
+
+                override fun onError(e: Throwable?) {
+                    mRootView?.errorMsg(e?.message)
+                }
+
+            })
+    }
 }

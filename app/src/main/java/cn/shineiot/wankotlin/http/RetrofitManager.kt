@@ -1,8 +1,14 @@
 package cn.shineiot.wankotlin.http
 
+import cn.shineiot.base.BaseApplication
+import cn.shineiot.base.utils.LogUtil
 import cn.shineiot.wankotlin.App
 import cn.shineiot.wankotlin.utils.NetworkUtil
 import cn.shineiot.wankotlin.utils.Preference
+import com.franmontiel.persistentcookiejar.ClearableCookieJar
+import com.franmontiel.persistentcookiejar.PersistentCookieJar
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -11,12 +17,16 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
 
+
 /**
  * Created by xuhao on 2017/11/16.
  *
  */
 
 object RetrofitManager{
+    private const val SAVE_USER_LOGIN_KEY = "user/login"
+    private const val SAVE_USER_REGISTER_KEY = "user/register"
+    private const val SET_COOKIE_KEY = "set-cookie"
 
     val service: HttpService by lazy (LazyThreadSafetyMode.SYNCHRONIZED){
         getRetrofit().create(HttpService::class.java)
@@ -47,12 +57,15 @@ object RetrofitManager{
     private fun addHeaderInterceptor(): Interceptor {
         return Interceptor { chain ->
             val originalRequest = chain.request()
+
             val requestBuilder = originalRequest.newBuilder()
                     // Provide your custom header here
                     .header("token", token)
                     .method(originalRequest.method(), originalRequest.body())
             val request = requestBuilder.build()
-            chain.proceed(request)
+            val response = chain.proceed(request)
+
+            response
         }
     }
 
@@ -99,6 +112,8 @@ object RetrofitManager{
     }
 
     private fun getOkHttpClient(): OkHttpClient {
+        val cookieJar: ClearableCookieJar =
+            PersistentCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(BaseApplication.context))
         //添加一个log拦截器,打印所有的log
         val httpLoggingInterceptor = HttpLoggingInterceptor()
         //可以设置请求过滤的水平,body,basic,headers
@@ -117,6 +132,7 @@ object RetrofitManager{
                 .connectTimeout(60L, TimeUnit.SECONDS)
                 .readTimeout(60L, TimeUnit.SECONDS)
                 .writeTimeout(60L, TimeUnit.SECONDS)
+                .cookieJar(cookieJar)
                 .build()
     }
 

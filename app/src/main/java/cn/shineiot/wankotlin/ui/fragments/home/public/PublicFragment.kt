@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Handler
 import android.view.View
+import android.widget.ExpandableListView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import cn.shineiot.base.mvp.BaseFragment
@@ -13,16 +14,18 @@ import cn.shineiot.wankotlin.R
 import cn.shineiot.wankotlin.bean.Public
 import cn.shineiot.wankotlin.ui.WebViewActivity
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemChildClickListener
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.chad.library.adapter.base.module.BaseLoadMoreModule
 import kotlinx.android.synthetic.main.fragment_public.*
 
-class PublicFragment : BaseFragment<PublicView, PublicPresenter>(), PublicView, OnItemClickListener,
+class PublicFragment : BaseFragment<PublicView, PublicPresenter>(), PublicView, OnItemClickListener,OnItemChildClickListener,
     SwipeRefreshLayout.OnRefreshListener {
 
     private var page: Int = 1   //第x页
     private lateinit var adapter: PublicAdapter
     private lateinit var loadMoreModule : BaseLoadMoreModule
+    private var mPosition:Int = 0
 
     private var handle = Handler {
         if (it.what == 1) {
@@ -51,6 +54,10 @@ class PublicFragment : BaseFragment<PublicView, PublicPresenter>(), PublicView, 
         adapter = PublicAdapter(R.layout.item_public_fragment)
         publicRecyclerView.adapter = adapter
         adapter.setOnItemClickListener(this)
+        adapter.setOnItemChildClickListener(this)
+//        adapter.setOnItemChildClickListener { adapter, view, position ->
+//            ToastUtils.DEFAULT.show(position)
+//        }
 
         //上拉加载更多
         loadMoreModule = adapter.loadMoreModule
@@ -79,6 +86,14 @@ class PublicFragment : BaseFragment<PublicView, PublicPresenter>(), PublicView, 
             }, 2000)
     }
 
+    override fun SuccessCollect() {
+        adapter.notifyItemChanged(mPosition)
+    }
+
+    override fun SuccessUnCollect() {
+        adapter.notifyItemChanged(mPosition)
+    }
+
     override fun showLoading() {
         publicSwip.isRefreshing = true
     }
@@ -101,5 +116,16 @@ class PublicFragment : BaseFragment<PublicView, PublicPresenter>(), PublicView, 
         intent.setClass(activity, WebViewActivity::class.java)
         intent.putExtra("path", item.link)
         startActivity(intent)
+    }
+
+    override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        mPosition = position
+        val public:Public = adapter.getItem(position) as Public
+        if(public.collect){
+            presenter?.unCollect(public.id)
+        }else{
+            presenter?.collect(public.id)
+        }
+
     }
 }

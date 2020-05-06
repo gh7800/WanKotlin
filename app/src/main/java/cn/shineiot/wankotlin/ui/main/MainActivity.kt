@@ -1,6 +1,7 @@
 package cn.shineiot.wankotlin.ui.main
 
 import android.os.Build
+import android.view.KeyEvent
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
@@ -55,7 +56,7 @@ class MainActivity : BaseMVPActivity<MainView, MainPresenter>(), MainView {
 
         viewPager.addOnPageChangeListener(viewPagerChangeListener)
         viewPager.adapter = ViewPagerAdapter(supportFragmentManager)
-//        viewPager.offscreenPageLimit = 3
+        viewPager.offscreenPageLimit = 4
     }
 
     class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
@@ -123,5 +124,10 @@ class MainActivity : BaseMVPActivity<MainView, MainPresenter>(), MainView {
         ToastUtils.DEFAULT.show(msg)
     }
 
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        super.onKeyDown(keyCode, event)
+
+        return false
+    }
 
 }

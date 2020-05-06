@@ -2,19 +2,21 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="88dp"
+    android:layout_height="76dp"
     android:paddingTop="5dp"
+    android:background="?android:attr/selectableItemBackground"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/title"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:textSize="16sp"
-        android:textColor="@color/black"
-        android:paddingLeft="10dp"
+        android:textColor="@color/textColor3"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
         />
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/author"
@@ -22,16 +24,29 @@
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title"
-        android:layout_marginTop="15dp"
-        android:paddingLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:paddingStart="10dp"
         android:textSize="12sp"
-        android:textColor="@color/gray"
+        android:textColor="@color/textColor6"
+        />
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/collectBt"
+        android:layout_width="20dp"
+        android:layout_height="18dp"
+        android:scaleType="center"
+        android:button="@null"
+        android:checked="true"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/icon_uncollect"
+        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="10dp"
         />
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="1dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:background="@color/gray"/>
+        android:background="@color/f2"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,4 +5,6 @@ import cn.shineiot.wankotlin.bean.Public
 
 interface PublicView :IBaseView{
     fun successData(data:List<Public>)
+    fun SuccessCollect()
+    fun SuccessUnCollect()
 }

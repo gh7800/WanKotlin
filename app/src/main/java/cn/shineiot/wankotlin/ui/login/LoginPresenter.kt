@@ -20,7 +20,6 @@ class LoginPresenter : BasePresenter<LoginView.View>() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(object : Subscriber<BaseResult<User>>() {
                 override fun onNext(result: BaseResult<User>?) {
-                    mRootView?.dismissLoading()
                     val code = result?.errorCode
                     if (code == 0) {
                         val user: User = result.data

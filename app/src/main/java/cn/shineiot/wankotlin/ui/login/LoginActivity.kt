@@ -10,9 +10,11 @@ import android.widget.Toast
 import cn.shineiot.base.mvp.BaseMVPActivity
 import cn.shineiot.base.utils.LogUtil
 import cn.shineiot.base.utils.SPutils
+import cn.shineiot.base.utils.ToastUtils
 import cn.shineiot.wankotlin.R
 import cn.shineiot.wankotlin.bean.User
 import cn.shineiot.wankotlin.ui.main.MainActivity
+import cn.shineiot.wankotlin.utils.Constants
 import com.maning.mndialoglibrary.MProgressDialog
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -67,11 +69,11 @@ class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginVi
 
     @SuppressLint("SetTextI18n")
     override fun successData(user: User) {
-        LogUtil.e("showloading${Thread.currentThread()}")
+        dismissLoading()
+        sPutils.saveValue(Constants.USERNAME,user.username)
+        sPutils.saveValue(Constants.PUBLIC_NAME,user.publicName)
+        sPutils.saveValue(Constants.ID,user.id)
 
-        val usernames = user.username
-        sPutils.saveValue("username",usernames)
-        val name = sPutils.getString("username")
         val intent = Intent(this,MainActivity::class.java)
         startActivity(intent)
         finish()
@@ -79,21 +81,19 @@ class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginVi
     }
 
     override fun showLoading() {
-       // MProgressDialog.showProgress(mContext)
+        MProgressDialog.showProgress(mContext)
     }
 
     override fun dismissLoading() {
         mHandler.postDelayed({
-            //MProgressDialog.dismissProgress()
-            val msg = Message()
-            msg.obj = "message-1"
-            mHandler.sendMessage(msg)
-        }, 0)
+            MProgressDialog.dismissProgress()
+        }, 1000)
 
     }
 
     override fun errorMsg(msg: String?) {
-
+        dismissLoading()
+        ToastUtils.DEFAULT.show(msg)
     }
 
 }

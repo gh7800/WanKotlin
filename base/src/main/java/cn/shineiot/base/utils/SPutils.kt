@@ -16,7 +16,6 @@ class SPutils {
      * 获取存放数据
      * @return 值
      */
-    @Suppress("UNCHECKED_CAST")
     fun getValue(key: String, default: Any): Any = with(prefs) {
         return when (default) {
             is Int -> getInt(key, default)
