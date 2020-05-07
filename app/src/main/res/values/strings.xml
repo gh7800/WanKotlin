@@ -1,5 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="app_name">WanKotlin</string>
+    <string name="app_name">WKotlin</string>
     <string name="title_activity_login" tools:ignore="ExtraTranslation">Sign in</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>

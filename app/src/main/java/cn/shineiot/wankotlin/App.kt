@@ -8,7 +8,7 @@ import kotlin.system.exitProcess
 
 class App : BaseApplication() {
     companion object {
-        var context: Context by Delegates.notNull() //kotlin 委托模式， notNull 适用于那些无法在初始化阶段就确定属性值的场合
+        lateinit var context: Context  //kotlin 委托模式， notNull 适用于那些无法在初始化阶段就确定属性值的场合
 
         fun logoutApp() {
             val sPutils = SPutils()

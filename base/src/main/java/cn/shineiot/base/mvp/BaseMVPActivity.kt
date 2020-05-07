@@ -6,9 +6,8 @@ import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
-import cn.shineiot.base.R
-import kotlinx.android.synthetic.main.include_toolbar.*
 
 
 /**
@@ -19,15 +18,16 @@ abstract class BaseMVPActivity<V : IBaseView, T : BasePresenter<V>> : AppCompatA
     var presenter: T? = null
 
     @SuppressLint("RestrictedApi")
-    fun setToolbar(toolbar: Toolbar, title: String) {
+    fun setToolbar(toolbar: Toolbar, title: String,textView: AppCompatTextView) {
         setSupportActionBar(toolbar)
         val actionBar = supportActionBar
         actionBar?.setDisplayShowTitleEnabled(false)
         actionBar?.setDisplayUseLogoEnabled(true)
         actionBar?.setDisplayShowHomeEnabled(true)
         actionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBar?.setHomeButtonEnabled(true)
 
-        toolbar_title.text = title
+        textView.text = title
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
