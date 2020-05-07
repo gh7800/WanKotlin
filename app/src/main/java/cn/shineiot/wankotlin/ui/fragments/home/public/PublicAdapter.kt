@@ -1,5 +1,6 @@
 package cn.shineiot.wankotlin.ui.fragments.home.public
 
+import cn.shineiot.base.utils.LogUtil
 import cn.shineiot.base.utils.StringUtils
 import cn.shineiot.wankotlin.R
 import cn.shineiot.wankotlin.bean.Public
@@ -11,7 +12,7 @@ class PublicAdapter(layoutRes:Int) : BaseQuickAdapter<Public, BaseViewHolder>(la
 
     override fun convert(holder: BaseViewHolder, item: Public) {
         val title = StringUtils.delHtmlTags(item.title)
-        holder.setText(R.id.title,title)
+        holder.setText(R.id.title,title).setText(R.id.niceDate,item.niceDate)
         if (item.author.isNotEmpty())
             holder.setText(R.id.author, item.author)
         else {
@@ -20,6 +21,8 @@ class PublicAdapter(layoutRes:Int) : BaseQuickAdapter<Public, BaseViewHolder>(la
 
         if(item.collect){
             holder.setBackgroundResource(R.id.collectBt,R.drawable.icon_collect)
+        }else{
+            holder.setBackgroundResource(R.id.collectBt,R.drawable.icon_uncollect)
         }
 
     }

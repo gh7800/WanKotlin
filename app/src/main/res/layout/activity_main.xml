@@ -24,7 +24,7 @@
         app:menu="@menu/navigation"
         android:background="?android:attr/windowBackground"
         app:itemTextColor="@drawable/navigation_text_color"
-
+        android:paddingTop="@dimen/dp_5"
         app:labelVisibilityMode="labeled"
         />
 

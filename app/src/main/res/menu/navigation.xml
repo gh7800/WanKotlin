@@ -3,24 +3,24 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
         <item android:id="@+id/home"
             android:title="首页"
-            android:icon="@drawable/ic_launcher"
+            android:icon="@drawable/selector_shop_cart"
             android:enabled="true"
             app:showAsAction="always"
             />
         <item android:id="@+id/blog"
             android:title="收藏"
-            android:icon="@drawable/ic_launcher"
+            android:icon="@drawable/selector_sort"
             android:enabled="true"
             app:showAsAction="always"
             />
         <item android:id="@+id/knowledge"
             android:title="问答"
-            android:icon="@drawable/ic_launcher"
+            android:icon="@drawable/selector_message"
             android:enabled="true"
             app:showAsAction="always"/>
         <item android:id="@+id/navigation"
             android:title="我的"
-            android:icon="@drawable/ic_launcher"
+            android:icon="@drawable/selector_mine"
             android:enabled="true"
             app:showAsAction="always"/>
 

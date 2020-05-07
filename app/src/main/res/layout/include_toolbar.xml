@@ -2,10 +2,10 @@
 <com.google.android.material.appbar.AppBarLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/appbar"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:elevation="0dp">
+    >
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -14,15 +14,17 @@
         android:background="?attr/colorPrimary"
         app:theme="@style/Toolbar.MenuText"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-        app:titleTextAppearance="@style/Toolbar.TitleText">
+        app:titleTextAppearance="@style/Toolbar.TitleText"
+        tools:ignore="MissingConstraints">
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
             android:textSize="18sp"
             android:layout_gravity="center"
-            android:id="@+id/toolbar_title" />
+            />
 
 
     </androidx.appcompat.widget.Toolbar>

@@ -1,16 +1,23 @@
 package cn.shineiot.wankotlin.ui.fragments.knowledge
 
+import android.content.Intent
+import android.view.View
 import cn.shineiot.base.mvp.BaseFragment
 import cn.shineiot.base.utils.ToastUtils
 import cn.shineiot.wankotlin.R
 import cn.shineiot.wankotlin.bean.PageEntity
-import cn.shineiot.wankotlin.ui.fragments.blog.BlogPresenter
-import cn.shineiot.wankotlin.ui.fragments.blog.BlogView
+import cn.shineiot.wankotlin.bean.Public
+import cn.shineiot.wankotlin.ui.WebViewActivity
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
+import com.chad.library.adapter.base.listener.OnLoadMoreListener
+import com.chad.library.adapter.base.module.BaseLoadMoreModule
 import kotlinx.android.synthetic.main.fragment_knowledge.*
 
-class KnowledgeFragment : BaseFragment<KnowledgeView,KnowledgePresenter>(),KnowledgeView {
-    private var page = 1
-    private var adapter:KnowledgeAdapter? = null
+class KnowledgeFragment : BaseFragment<KnowledgeView,KnowledgePresenter>(),KnowledgeView ,OnItemClickListener,OnLoadMoreListener{
+    private var page = 0
+    private lateinit var adapter:KnowledgeAdapter
+    private lateinit var loadMoreModule: BaseLoadMoreModule
 
     override fun initPresenter(): KnowledgePresenter? {
         return KnowledgePresenter()
@@ -21,8 +28,14 @@ class KnowledgeFragment : BaseFragment<KnowledgeView,KnowledgePresenter>(),Knowl
     }
 
     override fun initView() {
-        adapter = KnowledgeAdapter(R.layout.item_public_fragment)
+        adapter = KnowledgeAdapter(R.layout.item_wen_da)
         knowledgeRecyclerView.adapter = adapter
+        adapter.setOnItemClickListener(this)
+
+        loadMoreModule = adapter.loadMoreModule
+        loadMoreModule.setOnLoadMoreListener(this)
+        loadMoreModule.isAutoLoadMore = true
+
     }
 
     override fun lazyLoad() {
@@ -30,7 +43,14 @@ class KnowledgeFragment : BaseFragment<KnowledgeView,KnowledgePresenter>(),Knowl
     }
 
     override fun SuccessData(data: PageEntity) {
-        adapter?.addData(data.datas)
+        adapter.addData(data.datas)
+
+        if(page == data.pageCount){
+            loadMoreModule.loadMoreEnd(false)
+        }else{
+            page++
+            loadMoreModule.loadMoreComplete()
+        }
     }
 
     override fun showLoading() {
@@ -42,5 +62,16 @@ class KnowledgeFragment : BaseFragment<KnowledgeView,KnowledgePresenter>(),Knowl
 
     override fun errorMsg(msg: String?) {
         ToastUtils.DEFAULT.show(msg)
+    }
+
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        val item = adapter.getItem(position) as Public
+        val intent = Intent(context, WebViewActivity::class.java)
+        intent.putExtra("path", item.link)
+        startActivity(intent)
+    }
+
+    override fun onLoadMore() {
+        presenter?.getWenDa(page)
     }
 }

@@ -1,17 +1,28 @@
 package cn.shineiot.wankotlin.ui.fragments.knowledge
 
 import cn.shineiot.base.mvp.BasePresenter
-import cn.shineiot.base.mvp.BaseResult
-import cn.shineiot.base.utils.ToastUtils
 import cn.shineiot.wankotlin.bean.PageEntity
-import cn.shineiot.wankotlin.http.RetrofitManager
-import rx.Subscriber
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
+import cn.shineiot.wankotlin.http.AbstractObserver
+import cn.shineiot.wankotlin.http.HttpClient
 
 class KnowledgePresenter : BasePresenter<KnowledgeView>() {
+
     fun getWenDa(page:Int){
-        RetrofitManager.service.getWenDa(page)
+        HttpClient.getWenDa(page,object :AbstractObserver<PageEntity>(){
+            override fun requestSuccess(t: PageEntity) {
+                mRootView?.SuccessData(t)
+            }
+
+            override fun requestFaild(error: String?) {
+                mRootView?.errorMsg(error)
+            }
+
+            override fun onCompleted() {
+
+            }
+        })
+
+        /*RetrofitManager.service.getWenDa(page)
             .subscribeOn(Schedulers.io())
             .unsubscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -32,6 +43,6 @@ class KnowledgePresenter : BasePresenter<KnowledgeView>() {
                     mRootView?.errorMsg(e?.message)
                 }
 
-            })
+            })*/
     }
 }

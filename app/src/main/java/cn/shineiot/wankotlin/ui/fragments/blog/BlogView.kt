@@ -5,4 +5,5 @@ import cn.shineiot.wankotlin.bean.PageEntity
 
 interface BlogView :IBaseView {
     fun SuccessData(pageEntity: PageEntity)
+    fun SuccessUnCollect()
 }

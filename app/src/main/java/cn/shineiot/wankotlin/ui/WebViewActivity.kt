@@ -2,10 +2,10 @@ package cn.shineiot.wankotlin.ui
 
 import androidx.appcompat.widget.LinearLayoutCompat
 import cn.shineiot.base.mvp.BaseActivity
-import cn.shineiot.base.utils.LogUtil
 import cn.shineiot.wankotlin.R
 import com.just.agentweb.AgentWeb
 import kotlinx.android.synthetic.main.activity_webview.*
+import kotlinx.android.synthetic.main.include_toolbar.*
 
 class WebViewActivity : BaseActivity() {
     private lateinit var path :String
@@ -16,7 +16,7 @@ class WebViewActivity : BaseActivity() {
 
     override fun initView() {
         path = intent.extras.getString("path")
-        setToolbar(toolbar,"文章详情")
+        setToolbar(toolbar,"文章详情",toolbar_title)
 
         AgentWeb.with(this)
             .setAgentWebParent(linearLayout,LinearLayoutCompat.LayoutParams(-1,-1))
@@ -27,7 +27,6 @@ class WebViewActivity : BaseActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
-        LogUtil.e("onSupportNavigateUp")
         finish()
         return super.onSupportNavigateUp()
     }

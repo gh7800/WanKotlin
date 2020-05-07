@@ -6,6 +6,8 @@ import cn.shineiot.base.utils.LogUtil
 import cn.shineiot.wankotlin.bean.User
 import cn.shineiot.wankotlin.http.RetrofitManager
 import cn.shineiot.base.utils.ToastUtils
+import cn.shineiot.wankotlin.http.AbstractObserver
+import cn.shineiot.wankotlin.http.HttpClient
 import rx.Subscriber
 import rx.android.schedulers.AndroidSchedulers
 import rx.schedulers.Schedulers
@@ -14,7 +16,22 @@ class LoginPresenter : BasePresenter<LoginView.View>() {
 
     fun login(username: String, password: String) {
 
-        RetrofitManager.service.login(username, password)
+        HttpClient.login(username, password, object : AbstractObserver<User>() {
+            override fun requestSuccess(user: User) {
+                mRootView?.successData(user)
+            }
+
+            override fun requestFaild(error: String?) {
+                mRootView?.errorMsg(error)
+            }
+
+            override fun onCompleted() {
+
+            }
+
+        })
+
+        /*RetrofitManager.service.login(username, password)
             .subscribeOn(Schedulers.io())
             .unsubscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -39,7 +56,7 @@ class LoginPresenter : BasePresenter<LoginView.View>() {
                     mRootView?.dismissLoading()
                 }
 
-            })
+            })*/
 
     }
 

@@ -21,7 +21,7 @@ interface HttpService {
     fun logout():Observable<BaseResult<User>>
 
     @GET("banner/json")
-    fun getBanner():Observable<BaseListResult<Banner>>
+    fun getBanner():Observable<BaseResult<List<Banner>>>
 
     //最新博文
     @GET("article/list/{page}/json")
@@ -40,12 +40,10 @@ interface HttpService {
     fun getWenDa(@Path("page")page:Int):Observable<BaseResult<PageEntity>>
 
     //收藏站内文章
-    @FormUrlEncoded
     @POST("lg/collect/{id}/json")
     fun collect(@Path("id")id:Int):Observable<BaseResult<Public>>
 
     //取消收藏站内文章
-    @FormUrlEncoded
     @POST("lg/uncollect_originId/{id}/json")
     fun uncollect(@Path("id")id:Int):Observable<BaseResult<Public>>
 

@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by xuhao on 2017/11/16.
  *
+ *                            弃用
  */
 
 object RetrofitManager{
@@ -100,7 +101,7 @@ object RetrofitManager{
         }
     }
 
-    private fun getRetrofit(): Retrofit {
+    fun getRetrofit(): Retrofit {
         // 获取retrofit的实例
         return Retrofit.Builder()
                 .baseUrl(HttpUrls.BASEURL)  //自己配置

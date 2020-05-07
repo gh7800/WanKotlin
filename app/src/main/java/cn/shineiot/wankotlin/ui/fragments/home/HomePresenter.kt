@@ -1,32 +1,25 @@
 package cn.shineiot.wankotlin.ui.fragments.home
 
-import cn.shineiot.base.mvp.BaseListResult
 import cn.shineiot.base.mvp.BasePresenter
-import cn.shineiot.base.utils.LogUtil
 import cn.shineiot.wankotlin.bean.Banner
-import cn.shineiot.wankotlin.http.RetrofitManager
-import rx.Subscriber
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
+import cn.shineiot.wankotlin.http.AbstractObserver
+import cn.shineiot.wankotlin.http.HttpClient
 
 class HomePresenter : BasePresenter<HomeView>() {
     fun getBanner() {
-        RetrofitManager.service.getBanner()
-            .subscribeOn(Schedulers.io())
-            .unsubscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : Subscriber<BaseListResult<Banner>>() {
-                override fun onNext(result: BaseListResult<Banner>) {
-                    mRootView?.successBanner(result.data)
-                }
+        HttpClient.getBanner(object : AbstractObserver<List<Banner>>(){
+            override fun requestSuccess(t: List<Banner>) {
+                mRootView?.successBanner(t)
+            }
 
-                override fun onError(e: Throwable) {
-                    mRootView?.errorMsg(e.message)
-                }
+            override fun requestFaild(error: String?) {
+                mRootView?.errorMsg(error)
+            }
 
-                override fun onCompleted() {
+            override fun onCompleted() {
 
-                }
-            })
+            }
+
+        })
     }
 }

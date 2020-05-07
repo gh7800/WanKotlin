@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_public.*
 class PublicFragment : BaseFragment<PublicView, PublicPresenter>(), PublicView, OnItemClickListener,OnItemChildClickListener,
     SwipeRefreshLayout.OnRefreshListener {
 
-    private var page: Int = 1   //第x页
+    private var page: Int = 0   //第x页
     private lateinit var adapter: PublicAdapter
     private lateinit var loadMoreModule : BaseLoadMoreModule
     private var mPosition:Int = 0
@@ -55,9 +55,7 @@ class PublicFragment : BaseFragment<PublicView, PublicPresenter>(), PublicView, 
         publicRecyclerView.adapter = adapter
         adapter.setOnItemClickListener(this)
         adapter.setOnItemChildClickListener(this)
-//        adapter.setOnItemChildClickListener { adapter, view, position ->
-//            ToastUtils.DEFAULT.show(position)
-//        }
+        adapter.addChildClickViewIds(R.id.collectBt)
 
         //上拉加载更多
         loadMoreModule = adapter.loadMoreModule
@@ -74,7 +72,7 @@ class PublicFragment : BaseFragment<PublicView, PublicPresenter>(), PublicView, 
     }
 
     override fun onRefresh() {
-        page = 1
+        page = 0
         presenter?.getPublic(page)
     }
 
@@ -87,11 +85,15 @@ class PublicFragment : BaseFragment<PublicView, PublicPresenter>(), PublicView, 
     }
 
     override fun SuccessCollect() {
+        adapter.getItem(mPosition).collect = true
         adapter.notifyItemChanged(mPosition)
+        ToastUtils.DEFAULT.show("收藏成功$mPosition")
     }
 
     override fun SuccessUnCollect() {
+        adapter.getItem(mPosition).collect = false
         adapter.notifyItemChanged(mPosition)
+        ToastUtils.DEFAULT.show("取消收藏$mPosition")
     }
 
     override fun showLoading() {
@@ -120,6 +122,7 @@ class PublicFragment : BaseFragment<PublicView, PublicPresenter>(), PublicView, 
 
     override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
         mPosition = position
+        ToastUtils.DEFAULT.show(position)
         val public:Public = adapter.getItem(position) as Public
         if(public.collect){
             presenter?.unCollect(public.id)

@@ -27,7 +27,7 @@ class ToastUtils private constructor(private val builder: Builder) {
     private var container: View? = null
 
     fun show(resId: Int) {
-        show(context.getString(resId))
+        show(resId.toString())
     }
 
     fun show(message: String?, vararg any: Any) {

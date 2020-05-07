@@ -1,7 +1,6 @@
 apply plugin: 'com.android.application'
 
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
 
 android {
@@ -29,7 +28,9 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 }
-
+androidExtensions {
+    experimental = true
+}
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
