@@ -38,7 +38,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.WebViewActivity" />
+        <activity android:name=".ui.WebViewActivity" android:launchMode="singleTop"/>
+
+        <activity android:name=".ui.PhotoActivity" android:launchMode="singleTop" android:theme="@style/translucent"/>
     </application>
 
 </manifest>

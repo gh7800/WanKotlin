@@ -6,5 +6,6 @@ class Constants {
         const val ID  = "id"
         const val USERNAME  = "username"
         const val PUBLIC_NAME  = "public_name"
+        const val PATH = "path"
     }
 }

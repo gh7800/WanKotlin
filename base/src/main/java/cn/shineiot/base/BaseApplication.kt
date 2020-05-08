@@ -6,7 +6,7 @@ import kotlin.properties.Delegates
 
 open class BaseApplication : Application() {
     companion object {
-        var context: Context by Delegates.notNull() //kotlin 委托模式， notNull 适用于那些无法在初始化阶段就确定属性值的场合
+        lateinit var context: Context
     }
     override fun onCreate() {
         super.onCreate()

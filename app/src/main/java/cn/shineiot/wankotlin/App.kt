@@ -3,7 +3,6 @@ package cn.shineiot.wankotlin
 import android.content.Context
 import cn.shineiot.base.BaseApplication
 import cn.shineiot.base.utils.SPutils
-import kotlin.properties.Delegates
 import kotlin.system.exitProcess
 
 class App : BaseApplication() {

@@ -3,19 +3,24 @@ package cn.shineiot.wankotlin.ui.fragments.home.project
 import android.content.Intent
 import android.graphics.Color
 import android.os.Handler
+import android.view.View
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import cn.shineiot.base.mvp.BaseFragment
 import cn.shineiot.base.utils.LogUtil
 import cn.shineiot.base.utils.ToastUtils
 import cn.shineiot.wankotlin.R
 import cn.shineiot.wankotlin.bean.Public
+import cn.shineiot.wankotlin.ui.PhotoActivity
 import cn.shineiot.wankotlin.ui.WebViewActivity
+import cn.shineiot.wankotlin.utils.Constants
+import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemChildClickListener
 import com.chad.library.adapter.base.module.BaseLoadMoreModule
 import com.chad.library.adapter.base.module.LoadMoreModule
 import kotlinx.android.synthetic.main.fragment_project.*
 
 class ProjectFragment : BaseFragment<ProjectView, ProjectPresenter>(), ProjectView,
-    SwipeRefreshLayout.OnRefreshListener {
+    SwipeRefreshLayout.OnRefreshListener,OnItemChildClickListener {
     private var page: Int = 1
     private lateinit var adapter: ProjectAdapter
     private lateinit var loadMoreModule : BaseLoadMoreModule
@@ -52,6 +57,9 @@ class ProjectFragment : BaseFragment<ProjectView, ProjectPresenter>(), ProjectVi
             LogUtil.e("loadMore")
             presenter?.getProject(page)
         })
+
+        adapter.setOnItemChildClickListener(this)
+        adapter.addChildClickViewIds(R.id.project_image)
 
         adapter.setOnItemClickListener { adapterProject, view, position ->
             val item = adapterProject.getItem(position) as Public
@@ -101,4 +109,12 @@ class ProjectFragment : BaseFragment<ProjectView, ProjectPresenter>(), ProjectVi
         ToastUtils.DEFAULT.show(msg)
     }
 
+    override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+        if(view.id == R.id.project_image){
+            val public = adapter.getItem(position) as Public
+            val intent = Intent(context,PhotoActivity::class.java)
+            intent.putExtra(Constants.PATH,public.envelopePic)
+            startActivity(intent)
+        }
+    }
 }

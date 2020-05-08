@@ -33,7 +33,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    api "com.android.support:appcompat-v7:$supportVersion"
+    //api "com.android.support:appcompat-v7:$supportVersion"
     api "com.android.support.constraint:constraint-layout:$constraint_layout"
     api "com.android.support:design:$supportVersion"
     api "com.android.support:support-annotations:$supportVersion"
@@ -54,8 +54,9 @@ dependencies {
     api "com.youth.banner:banner:$banner"
     api "com.github.CymChad:BaseRecyclerViewAdapterHelper:$BaseRecyclerViewAdapterHelper"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinx_coroutines_android"
-    api 'androidx.appcompat:appcompat:1.1.0'
     api "com.just.agentweb:agentweb:$agentweb"
+    api 'androidx.appcompat:appcompat:1.1.0'
     api 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
+    api 'com.github.githubwing:DragPhotoView:1.0.1'
 
 }

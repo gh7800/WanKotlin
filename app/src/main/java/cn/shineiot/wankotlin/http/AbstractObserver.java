@@ -52,6 +52,7 @@ public abstract class AbstractObserver<T> extends Subscriber<BaseResult<T>> {
 	 */
 	private void startLoginActivity() {
 		Intent intent =new Intent(App.Companion.getContext(), LoginActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		App.Companion.getContext().startActivity(intent);
 	}
 
