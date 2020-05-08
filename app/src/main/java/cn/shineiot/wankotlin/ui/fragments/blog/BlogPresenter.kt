@@ -7,9 +7,6 @@ import cn.shineiot.wankotlin.bean.Public
 import cn.shineiot.wankotlin.http.AbstractObserver
 import cn.shineiot.wankotlin.http.HttpClient
 import cn.shineiot.wankotlin.http.RetrofitManager
-import rx.Subscriber
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
 
 class BlogPresenter : BasePresenter<BlogView>() {
     fun getMyCollect(page:Int){
@@ -20,10 +17,6 @@ class BlogPresenter : BasePresenter<BlogView>() {
 
             override fun requestFaild(error: String?) {
                 mRootView?.errorMsg(error)
-            }
-
-            override fun onCompleted() {
-
             }
 
         })
@@ -37,10 +30,6 @@ class BlogPresenter : BasePresenter<BlogView>() {
 
             override fun requestFaild(error: String?) {
                 mRootView?.errorMsg(error)
-            }
-
-            override fun onCompleted() {
-
             }
 
         })

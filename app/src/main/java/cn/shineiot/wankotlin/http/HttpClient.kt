@@ -4,8 +4,9 @@ import cn.shineiot.wankotlin.bean.Banner
 import cn.shineiot.wankotlin.bean.PageEntity
 import cn.shineiot.wankotlin.bean.Public
 import cn.shineiot.wankotlin.bean.User
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
+import io.reactivex.ObservableTransformer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 object HttpClient {
 
@@ -13,73 +14,73 @@ object HttpClient {
         RetrofitManager.getRetrofit().create(HttpService::class.java)
     }
 
+    private fun <T> observableTransformer(): ObservableTransformer<T, T> {
+        return ObservableTransformer { upstream ->
+            upstream.subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+        }
+    }
+
+    //登录
     fun login(username: String, password: String, abstractObserver: AbstractObserver<User>) {
         service.login(username, password)
-            .subscribeOn(Schedulers.io())
-            .unsubscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .compose(observableTransformer())
+            .subscribe(abstractObserver)
+    }
+
+    //退出登录
+    fun logout(abstractObserver: AbstractObserver<User>){
+        service.logout()
+            .compose(observableTransformer())
             .subscribe(abstractObserver)
     }
 
     //获取收藏的文章
-    fun getMyCollect(page: Int,abstractObserver: AbstractObserver<PageEntity>) {
+    fun getMyCollect(page: Int, abstractObserver: AbstractObserver<PageEntity>) {
         service.getMyCollect(page)
-            .subscribeOn(Schedulers.io())
-            .unsubscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .compose(observableTransformer())
             .subscribe(abstractObserver)
     }
 
-    fun getWenDa(page :Int,abstractObserver: AbstractObserver<PageEntity>){
+    fun getWenDa(page: Int, abstractObserver: AbstractObserver<PageEntity>) {
         service.getWenDa(page)
-            .subscribeOn(Schedulers.io())
-            .unsubscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .compose(observableTransformer())
             .subscribe(abstractObserver)
     }
 
     //添加收藏
-    fun collect(id : Int,abstractObserver: AbstractObserver<Public>){
+    fun collect(id: Int, abstractObserver: AbstractObserver<Public>) {
         service.collect(id)
-            .subscribeOn(Schedulers.io())
-            .unsubscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .compose(observableTransformer())
             .subscribe(abstractObserver)
     }
 
     //取消收藏
-    fun unCollect(id : Int,abstractObserver: AbstractObserver<Public>){
+    fun unCollect(id: Int, abstractObserver: AbstractObserver<Public>) {
         service.uncollect(id)
-            .subscribeOn(Schedulers.io())
-            .unsubscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .compose(observableTransformer())
             .subscribe(abstractObserver)
     }
 
     //最新博文
-    fun getNewPublic(page:Int,abstractObserver: AbstractObserver<PageEntity>){
+    fun getNewPublic(page: Int, abstractObserver: AbstractObserver<PageEntity>) {
         service.getPublic(page)
-            .subscribeOn(Schedulers.io())
-            .unsubscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .compose(observableTransformer())
             .subscribe(abstractObserver)
     }
 
     //开源项目
-    fun getNewProject(page:Int,abstractObserver: AbstractObserver<PageEntity>){
+    fun getNewProject(page: Int, abstractObserver: AbstractObserver<PageEntity>) {
         service.getProject(page)
-            .subscribeOn(Schedulers.io())
-            .unsubscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .compose(observableTransformer())
             .subscribe(abstractObserver)
     }
 
     //banner
-    fun getBanner(abstractObserver: AbstractObserver<List<Banner>>){
+    fun getBanner(abstractObserver: AbstractObserver<List<Banner>>) {
         service.getBanner()
-            .subscribeOn(Schedulers.io())
-            .unsubscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .compose(observableTransformer())
             .subscribe(abstractObserver)
     }
 }

@@ -11,15 +11,16 @@ import cn.shineiot.base.mvp.BaseResult;
 import cn.shineiot.base.utils.LogUtil;
 import cn.shineiot.wankotlin.App;
 import cn.shineiot.wankotlin.ui.login.LoginActivity;
-import retrofit2.adapter.rxjava.HttpException;
-import rx.Subscriber;
+import io.reactivex.Observer;
+import io.reactivex.disposables.Disposable;
+import retrofit2.HttpException;
 
 /**
  * @author GF63
  * 错误信息集中处理
  * 登录过期，跳转登录页
  */
-public abstract class AbstractObserver<T> extends Subscriber<BaseResult<T>> {
+public abstract class AbstractObserver<T> implements Observer<BaseResult<T>> {
 	//出错提示
 	private final String networkMsg = "网络错误";
 	private final String serverMsg = "服务器错误";
@@ -29,6 +30,16 @@ public abstract class AbstractObserver<T> extends Subscriber<BaseResult<T>> {
 	private final String unknownMsg = "未知错误";
 	private final String connectMsg = "连接服务器错误,请检查网络";
 	private final String connectOutMsg = "连接服务器超时,请检查网络";
+
+	@Override
+	public void onSubscribe(Disposable d) {
+
+	}
+
+	@Override
+	public void onComplete() {
+
+	}
 
 	@Override
 	public void onNext(BaseResult<T> baseResult) {

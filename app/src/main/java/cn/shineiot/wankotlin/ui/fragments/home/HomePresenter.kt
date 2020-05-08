@@ -16,10 +16,6 @@ class HomePresenter : BasePresenter<HomeView>() {
                 mRootView?.errorMsg(error)
             }
 
-            override fun onCompleted() {
-
-            }
-
         })
     }
 }

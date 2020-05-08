@@ -1,11 +1,6 @@
 package cn.shineiot.base.mvp
 
-import cn.shineiot.base.utils.LogUtil
 import io.reactivex.disposables.CompositeDisposable
-import rx.Observable
-import rx.Subscriber
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
 
 /**
  * Created by xuhao on 2017/11/16.

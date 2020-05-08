@@ -17,10 +17,6 @@ class PublicPresenter :BasePresenter<PublicView>() {
                 mRootView?.errorMsg(error)
             }
 
-            override fun onCompleted() {
-
-            }
-
         })
     }
 
@@ -34,10 +30,6 @@ class PublicPresenter :BasePresenter<PublicView>() {
                 mRootView?.errorMsg(error)
             }
 
-            override fun onCompleted() {
-
-            }
-
         })
     }
 
@@ -49,10 +41,6 @@ class PublicPresenter :BasePresenter<PublicView>() {
 
             override fun requestFaild(error: String?) {
                 mRootView?.errorMsg(error)
-            }
-
-            override fun onCompleted() {
-
             }
 
         })

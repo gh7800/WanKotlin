@@ -16,10 +16,6 @@ class ProjectPresenter :BasePresenter<ProjectView>() {
                 mRootView?.errorMsg(error)
             }
 
-            override fun onCompleted() {
-
-            }
-
         })
     }
 }

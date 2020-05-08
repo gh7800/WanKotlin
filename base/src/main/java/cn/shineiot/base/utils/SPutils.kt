@@ -10,7 +10,9 @@ import cn.shineiot.base.BaseApplication
  */
 class SPutils {
     private val name = "APP_Config"
-    private val prefs: SharedPreferences by lazy { BaseApplication.context.getSharedPreferences(name, Context.MODE_PRIVATE) }
+    private val prefs: SharedPreferences by lazy {
+        BaseApplication.context.getSharedPreferences(name, Context.MODE_PRIVATE)
+    }
 
     /**
      * 获取存放数据

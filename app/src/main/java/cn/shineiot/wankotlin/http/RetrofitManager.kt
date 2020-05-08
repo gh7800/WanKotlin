@@ -12,7 +12,7 @@ import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersisto
 import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
@@ -28,10 +28,6 @@ object RetrofitManager{
     private const val SAVE_USER_LOGIN_KEY = "user/login"
     private const val SAVE_USER_REGISTER_KEY = "user/register"
     private const val SET_COOKIE_KEY = "set-cookie"
-
-    val service: HttpService by lazy (LazyThreadSafetyMode.SYNCHRONIZED){
-        getRetrofit().create(HttpService::class.java)
-    }
 
     private var token:String by Preference("token","")
 
@@ -106,7 +102,7 @@ object RetrofitManager{
         return Retrofit.Builder()
                 .baseUrl(HttpUrls.BASEURL)  //自己配置
                 .client(getOkHttpClient())
-                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
 

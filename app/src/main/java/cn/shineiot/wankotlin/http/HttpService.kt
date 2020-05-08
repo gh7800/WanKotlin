@@ -3,8 +3,8 @@ package cn.shineiot.wankotlin.http
 import cn.shineiot.base.mvp.BaseListResult
 import cn.shineiot.base.mvp.BaseResult
 import cn.shineiot.wankotlin.bean.*
+import io.reactivex.Observable
 import retrofit2.http.*
-import rx.Observable
 
 /**
  * API
