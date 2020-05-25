@@ -26,10 +26,6 @@ abstract class BaseActivity : AppCompatActivity() {
         actionBar?.setDisplayShowHomeEnabled(true)
         actionBar?.setDisplayHomeAsUpEnabled(true)
 
-//        val toolbartitle = findViewById<AppCompatTextView>(R.id.toolbar_title)
-
-//        toolbar.title = title
-//        toolbar_title.text = title
         textView.text = title
         actionBar?.setHomeButtonEnabled(true)
     }

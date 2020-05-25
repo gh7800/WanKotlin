@@ -10,7 +10,7 @@ import io.reactivex.schedulers.Schedulers
 
 object HttpClient {
 
-    private val service: HttpService by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+     val service: HttpService by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
         RetrofitManager.getRetrofit().create(HttpService::class.java)
     }
 

@@ -1,9 +1,9 @@
 package cn.shineiot.wankotlin.http
 
-import cn.shineiot.base.mvp.BaseListResult
 import cn.shineiot.base.mvp.BaseResult
 import cn.shineiot.wankotlin.bean.*
 import io.reactivex.Observable
+import retrofit2.Call
 import retrofit2.http.*
 
 /**
@@ -15,6 +15,10 @@ interface HttpService {
     @FormUrlEncoded
     @POST("user/login")
     fun login(@Field("username")username: String,@Field("password")password: String) : Observable<BaseResult<User>>
+
+    @FormUrlEncoded
+    @POST("user/login")
+    fun loginBy(@Field("username")username: String,@Field("password")password: String) : Call<BaseResult<User>>
 
     //退出登录
     @GET("user/logout/json")

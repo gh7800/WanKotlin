@@ -87,13 +87,13 @@ class PublicFragment : BaseFragment<PublicView, PublicPresenter>(), PublicView, 
     override fun SuccessCollect() {
         adapter.getItem(mPosition).collect = true
         adapter.notifyItemChanged(mPosition)
-        ToastUtils.DEFAULT.show("收藏成功$mPosition")
+        ToastUtils.DEFAULT.show("收藏成功")
     }
 
     override fun SuccessUnCollect() {
         adapter.getItem(mPosition).collect = false
         adapter.notifyItemChanged(mPosition)
-        ToastUtils.DEFAULT.show("取消收藏$mPosition")
+        ToastUtils.DEFAULT.show("取消收藏")
     }
 
     override fun showLoading() {

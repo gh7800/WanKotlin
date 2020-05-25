@@ -8,14 +8,25 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
+import cn.shineiot.base.utils.LogUtil
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlin.coroutines.CoroutineContext
 
 
 /**
  * BaseActivity基类
  */
-abstract class BaseMVPActivity<V : IBaseView, T : BasePresenter<V>> : AppCompatActivity() {
-    var mContext: Context? = null
+abstract class BaseMVPActivity<V : IBaseView, T : BasePresenter<V>> : AppCompatActivity(),CoroutineScope {
+    lateinit var mContext: Context
     var presenter: T? = null
+
+    //job用于控制协程,后面launch{}启动的协程,返回的job就是这个job对象
+    private lateinit var job: Job
+
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Main
 
     @SuppressLint("RestrictedApi")
     fun setToolbar(toolbar: Toolbar, title: String,textView: AppCompatTextView) {
@@ -34,6 +45,8 @@ abstract class BaseMVPActivity<V : IBaseView, T : BasePresenter<V>> : AppCompatA
         super.onCreate(savedInstanceState)
         setContentView(layoutId())
 
+        job = Job()
+        LogUtil.e("coroutineContext---$coroutineContext")
         mContext = this
         initP()
         initView()
@@ -88,6 +101,8 @@ abstract class BaseMVPActivity<V : IBaseView, T : BasePresenter<V>> : AppCompatA
     override fun onDestroy() {
         super.onDestroy()
         presenter?.detachView()
+
+        job.cancel()
     }
 
 }

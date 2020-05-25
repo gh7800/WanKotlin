@@ -89,22 +89,18 @@ class MainActivity : BaseMVPActivity<MainView, MainPresenter>(), MainView {
 
         when (item.itemId) {
             R.id.home -> {
-                LogUtil.e("home")
                 viewPager.currentItem = 0
                 return@OnNavigationItemSelectedListener true
             }
             R.id.blog -> {
-                LogUtil.e("blog")
                 viewPager.currentItem = 1
                 return@OnNavigationItemSelectedListener true
             }
             R.id.knowledge -> {
-                LogUtil.e("knowledge")
                 viewPager.currentItem = 2
                 return@OnNavigationItemSelectedListener true
             }
             R.id.navigation -> {
-                LogUtil.e("navigation")
                 viewPager.currentItem = 3
                 return@OnNavigationItemSelectedListener true
             }
