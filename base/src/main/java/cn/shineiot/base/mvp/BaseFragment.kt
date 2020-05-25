@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import cn.shineiot.base.utils.LogUtil
 
 /**
  * @author Xuhao
@@ -37,9 +38,15 @@ abstract class BaseFragment<V : IBaseView, T : BasePresenter<V>> : Fragment() {
         return inflater.inflate(getLayoutId(), null)
     }
 
+    /*override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        LogUtil.e("hidden---$hidden")
+        lazyLoad()
+    }*/
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
+        LogUtil.e("isVisibleToUser----$isVisibleToUser")
         if (isVisibleToUser) {
 //            lazyLoadDataIfPrepared()
             lazyLoad()
