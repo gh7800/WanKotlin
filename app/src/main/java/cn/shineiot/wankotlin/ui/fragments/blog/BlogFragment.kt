@@ -45,6 +45,7 @@ class BlogFragment : BaseFragment<BlogView, BlogPresenter>(), BlogView, OnItemCh
     }
 
     override fun lazyLoad() {
+        page = 0
         presenter?.getMyCollect(page)
     }
 

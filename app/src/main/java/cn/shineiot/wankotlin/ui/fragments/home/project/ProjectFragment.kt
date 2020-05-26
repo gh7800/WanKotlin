@@ -19,6 +19,9 @@ import com.chad.library.adapter.base.module.BaseLoadMoreModule
 import com.chad.library.adapter.base.module.LoadMoreModule
 import kotlinx.android.synthetic.main.fragment_project.*
 
+/**
+ * 最新项目
+ */
 class ProjectFragment : BaseFragment<ProjectView, ProjectPresenter>(), ProjectView,
     SwipeRefreshLayout.OnRefreshListener,OnItemChildClickListener {
     private var page: Int = 1

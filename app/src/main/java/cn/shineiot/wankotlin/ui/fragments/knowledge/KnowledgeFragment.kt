@@ -39,6 +39,7 @@ class KnowledgeFragment : BaseFragment<KnowledgeView,KnowledgePresenter>(),Knowl
     }
 
     override fun lazyLoad() {
+        page  = 0
         presenter?.getWenDa(page)
     }
 

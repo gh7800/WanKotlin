@@ -44,13 +44,18 @@ abstract class BaseFragment<V : IBaseView, T : BasePresenter<V>> : Fragment() {
         lazyLoad()
     }*/
 
-    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+    /*override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
         LogUtil.e("isVisibleToUser----$isVisibleToUser")
         if (isVisibleToUser) {
 //            lazyLoadDataIfPrepared()
             lazyLoad()
         }
+    }*/
+
+    override fun onResume() {
+        super.onResume()
+        lazyLoad()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

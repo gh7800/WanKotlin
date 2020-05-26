@@ -22,6 +22,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 /**
  * 首页
  */
+
 class MainActivity : BaseMVPActivity<MainView, MainPresenter>(), MainView {
 
     companion object {
@@ -44,29 +45,30 @@ class MainActivity : BaseMVPActivity<MainView, MainPresenter>(), MainView {
         bottomNavigationView.itemIconTintList = null
         bottomNavigationView.setOnNavigationItemSelectedListener(listener)
 
-        val homeFragment = HomeFragment()
-        val blogFragment = BlogFragment()
-        val knowledgeFragment = KnowledgeFragment()
-        val navigationFragment = NavigationFragment()
-
-        fragments.add(homeFragment)
-        fragments.add(blogFragment)
-        fragments.add(knowledgeFragment)
-        fragments.add(navigationFragment)
-
         viewPager.addOnPageChangeListener(viewPagerChangeListener)
         viewPager.adapter = ViewPagerAdapter(supportFragmentManager)
         viewPager.offscreenPageLimit = 4
     }
 
-    class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+
+    /**
+     * ViewPagerAdapter
+     * getItem里 fragment初始化
+     * BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT  当fragment显示的时候执行onResume()
+     */
+    inner class ViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm,FragmentPagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
         override fun getItem(p0: Int): Fragment {
-            return fragments[p0]
+            return when(p0){
+                0 -> HomeFragment()
+                1 -> BlogFragment()
+                2 -> KnowledgeFragment()
+                else -> NavigationFragment()
+            }
         }
 
         override fun getCount(): Int {
-            return fragments.size
+            return 4
         }
 
 

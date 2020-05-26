@@ -32,11 +32,12 @@ public class StringUtils {
 		htmlStr = htmlStr.replace("&ldquo;", "“");
 		htmlStr = htmlStr.replace("&rdquo;", "”");
 		htmlStr = htmlStr.replace("&nbsp;", " ");
-		htmlStr = htmlStr.replace("&", "&amp;");
+		//htmlStr = htmlStr.replace("&", "&amp;");
 		htmlStr = htmlStr.replace("&#39;", "'");
 		htmlStr = htmlStr.replace("&rsquo;", "’");
 		htmlStr = htmlStr.replace("&mdash;", "—");
 		htmlStr = htmlStr.replace("&ndash;", "–");
+		htmlStr = htmlStr.replace("&middot;", "–");
 
 
 		return htmlStr.trim();

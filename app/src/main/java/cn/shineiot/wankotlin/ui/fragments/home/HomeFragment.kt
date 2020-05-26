@@ -32,6 +32,7 @@ class HomeFragment : BaseFragment<HomeView, HomePresenter>(), HomeView {
 
     override fun initView() {
 
+        LogUtil.e("initview")
         bannerView.setImageLoader(GlideImageLoader())
         bannerView.setIndicatorGravity(BannerConfig.RIGHT)
 
@@ -49,7 +50,6 @@ class HomeFragment : BaseFragment<HomeView, HomePresenter>(), HomeView {
 
             override fun onTabSelected(p0: TabLayout.Tab?) {
                 val index = p0?.position
-                LogUtil.e(index)
                 smartReplaceFragment(fragments[index!!])
             }
         })
