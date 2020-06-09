@@ -14,12 +14,12 @@ class MDialogUtil {
         /**
          * @param onDialogDismissListener dialog关闭监听
          */
-        fun showLoading(context: Context, onDialogDismissListener: OnDialogDismissListener) {
+        fun showLoading(context: Context,content: String, onDialogDismissListener: OnDialogDismissListener) {
             mBuild.isCancelable(true)
                 .isCanceledOnTouchOutside(false)
                 .setOnDialogDismissListener(onDialogDismissListener)
             val mConfig = mBuild.build()
-            MProgressDialog.showProgress(context, mConfig)
+            MProgressDialog.showProgress(context,content, mConfig)
         }
 
         fun showLoading(context: Context, content: String) {

@@ -42,7 +42,7 @@ class MainActivity : BaseMVPActivity<MainView, MainPresenter>(), MainView {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun initView() {
         //消除图标是色块的问题，建议图标背景色为透明
-        bottomNavigationView.itemIconTintList = null
+        //bottomNavigationView.itemIconTintList = null
         bottomNavigationView.setOnNavigationItemSelectedListener(listener)
 
         viewPager.addOnPageChangeListener(viewPagerChangeListener)

@@ -19,6 +19,7 @@ class SPutils {
      * @return 值
      */
     fun getValue(key: String, default: Any): Any = with(prefs) {
+        LogUtil.e(prefs);
         return when (default) {
             is Int -> getInt(key, default)
             is String -> getString(key, default)

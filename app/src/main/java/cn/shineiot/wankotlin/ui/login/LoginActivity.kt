@@ -55,6 +55,12 @@ class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginVi
 
     override fun initView() {
 
+        val name = sPutils.getValue(Constants.USERNAME,"");
+        LogUtil.e("---$name")
+        if(TextUtils.isEmpty(name as CharSequence?)){
+//            username.text = name
+        }
+
         login.isEnabled = true  //直接用id调用view的属性 （需要插件 kotlin-android-extensions 的支持）
 
         login.setOnClickListener {
@@ -103,6 +109,9 @@ class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginVi
         sPutils.saveValue(Constants.PUBLIC_NAME, user.publicName)
         sPutils.saveValue(Constants.ID, user.id)
 
+        val name = sPutils.getValue(Constants.USERNAME,"");
+        LogUtil.e("$====$name")
+
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
@@ -111,7 +120,7 @@ class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginVi
 
     override fun showLoading() {
 
-        MDialogUtil.showLoading(mContext, OnDialogDismissListener {
+        MDialogUtil.showLoading(mContext,"登录中", OnDialogDismissListener {
                 if (job.isActive) {
                     job.cancel() //取消登录请求
                 }else{
