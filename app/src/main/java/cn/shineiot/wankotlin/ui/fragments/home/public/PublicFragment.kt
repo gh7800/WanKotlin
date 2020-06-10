@@ -7,6 +7,7 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import cn.shineiot.base.mvp.BaseFragment
+import cn.shineiot.base.mvp.BaseMvpFragment
 import cn.shineiot.base.utils.LogUtil
 import cn.shineiot.base.utils.ToastUtils
 import cn.shineiot.wankotlin.R
@@ -21,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_public.*
 /**
  * 最新博文
  */
-class PublicFragment : BaseFragment<PublicView, PublicPresenter>(), PublicView, OnItemClickListener,OnItemChildClickListener,
+class PublicFragment : BaseMvpFragment<PublicView, PublicPresenter>(), PublicView, OnItemClickListener,OnItemChildClickListener,
     SwipeRefreshLayout.OnRefreshListener {
 
     private var page: Int = 0   //第x页

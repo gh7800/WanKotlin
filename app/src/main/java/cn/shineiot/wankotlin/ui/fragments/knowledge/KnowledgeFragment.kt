@@ -2,7 +2,7 @@ package cn.shineiot.wankotlin.ui.fragments.knowledge
 
 import android.content.Intent
 import android.view.View
-import cn.shineiot.base.mvp.BaseFragment
+import cn.shineiot.base.mvp.BaseMvpFragment
 import cn.shineiot.base.utils.ToastUtils
 import cn.shineiot.wankotlin.R
 import cn.shineiot.wankotlin.bean.PageEntity
@@ -14,7 +14,7 @@ import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.chad.library.adapter.base.module.BaseLoadMoreModule
 import kotlinx.android.synthetic.main.fragment_knowledge.*
 
-class KnowledgeFragment : BaseFragment<KnowledgeView,KnowledgePresenter>(),KnowledgeView ,OnItemClickListener,OnLoadMoreListener{
+class KnowledgeFragment : BaseMvpFragment<KnowledgeView, KnowledgePresenter>(),KnowledgeView ,OnItemClickListener,OnLoadMoreListener{
     private var page = 0
     private lateinit var adapter:KnowledgeAdapter
     private lateinit var loadMoreModule: BaseLoadMoreModule

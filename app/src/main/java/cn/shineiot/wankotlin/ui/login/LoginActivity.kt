@@ -29,7 +29,7 @@ import retrofit2.Response
  */
 class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginView.View {
 
-    private val sPutils by lazy { SPutils() }
+    private val sPutils = SPutils()
     private lateinit var job: Job
 
     //handler的创建方法
@@ -42,7 +42,7 @@ class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginVi
         }
     }
 
-    override fun initPresenter(): LoginPresenter? {
+    override fun initPresenter(): LoginPresenter {
         return LoginPresenter()
     }
 

@@ -2,6 +2,7 @@ package cn.shineiot.wankotlin.ui.fragments.home
 
 import androidx.fragment.app.Fragment
 import cn.shineiot.base.mvp.BaseFragment
+import cn.shineiot.base.mvp.BaseMvpFragment
 import cn.shineiot.base.utils.LogUtil
 import cn.shineiot.base.utils.ToastUtils
 import cn.shineiot.wankotlin.R
@@ -17,7 +18,7 @@ import kotlinx.android.synthetic.main.fragment_home.*
 /**
  * 首页fragment
  */
-class HomeFragment : BaseFragment<HomeView, HomePresenter>(), HomeView {
+class HomeFragment : BaseMvpFragment<HomeView, HomePresenter>(), HomeView {
     private val tabTitle = arrayOf("最新博文", "最新项目")
     private val fragments = arrayListOf<Fragment>()
     private var currentFragment: Fragment ?= null

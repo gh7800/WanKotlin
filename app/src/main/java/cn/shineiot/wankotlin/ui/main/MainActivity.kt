@@ -35,7 +35,7 @@ class MainActivity : BaseMVPActivity<MainView, MainPresenter>(), MainView {
         return R.layout.activity_main
     }
 
-    override fun initPresenter(): MainPresenter? {
+    override fun initPresenter(): MainPresenter {
         return MainPresenter()
     }
 
