@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.text.Editable
 import android.text.TextUtils
 import cn.shineiot.base.mvp.BaseMVPActivity
 import cn.shineiot.base.mvp.BaseResult
@@ -59,6 +60,7 @@ class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginVi
         LogUtil.e("---$name")
         if(TextUtils.isEmpty(name as CharSequence?)){
 //            username.text = name
+            username.text = Editable.Factory.getInstance().newEditable(name)
         }
 
         login.isEnabled = true  //直接用id调用view的属性 （需要插件 kotlin-android-extensions 的支持）
@@ -77,10 +79,11 @@ class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginVi
                 else -> {
                     showLoading()
 
-                    //presenter?.login(username, password)
-                    //presenter?.loginBy(username, password)
+                    presenter.login(username, password)
 
-                    job = launch {
+                    //presenter.loginBy(username, password)
+
+                    /*job = launch {
                         //LogUtil.e(Thread.currentThread().id)
                         withContext(Dispatchers.IO) {
                             //LogUtil.e(Thread.currentThread().id)
@@ -97,7 +100,7 @@ class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginVi
                         } else {
                             errorMsg(result.message())
                         }
-                    }
+                    }*/
                 }
             }
         }
@@ -121,7 +124,7 @@ class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginVi
     override fun showLoading() {
 
         MDialogUtil.showLoading(mContext,"登录中", OnDialogDismissListener {
-                if (job.isActive) {
+                if (job.isCompleted) {
                     job.cancel() //取消登录请求
                 }else{
                     LogUtil.e("dialog关闭")

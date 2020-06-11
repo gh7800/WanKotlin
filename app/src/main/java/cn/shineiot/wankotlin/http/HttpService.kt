@@ -11,6 +11,11 @@ import retrofit2.http.*
  */
 interface HttpService {
 
+    //携程
+    @FormUrlEncoded
+    @POST("user/login")
+    suspend fun loginC(@Field("username")username: String,@Field("password")password: String) :BaseResult<User>
+
     //登录
     @FormUrlEncoded
     @POST("user/login")

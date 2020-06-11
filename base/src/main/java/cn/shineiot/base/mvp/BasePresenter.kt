@@ -1,12 +1,14 @@
 package cn.shineiot.base.mvp
 
 import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.GlobalScope
 
 /**
  * Created by xuhao on 2017/11/16.
  */
 open class BasePresenter<T : IBaseView> : IPresenter<T> {
 
+    var globalScope = GlobalScope
     var mRootView: T? = null
 
     private var compositeDisposable = CompositeDisposable()

@@ -1,6 +1,7 @@
 package cn.shineiot.base.mvp
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
@@ -19,7 +20,7 @@ import kotlin.coroutines.CoroutineContext
  * BaseActivity基类
  */
 abstract class BaseMVPActivity<V : IBaseView, T : BasePresenter<V>> : AppCompatActivity(),CoroutineScope {
-    lateinit var mContext: Context
+    lateinit var mContext: Activity
     lateinit var presenter: T
 
     //job用于控制协程,后面launch{}启动的协程,返回的job就是这个job对象
