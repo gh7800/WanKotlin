@@ -1,10 +1,12 @@
 package cn.shineiot.wankotlin.ui.fragments.navigation
 
+import android.content.Intent
 import cn.shineiot.base.mvp.BaseMvpFragment
 import cn.shineiot.base.utils.SPutils
 import cn.shineiot.base.utils.ToastUtils
 import cn.shineiot.wankotlin.App
 import cn.shineiot.wankotlin.R
+import cn.shineiot.wankotlin.ui.login.LoginActivity
 import cn.shineiot.wankotlin.utils.Constants
 import kotlinx.android.synthetic.main.fragment_navigation.*
 
@@ -35,8 +37,13 @@ class NavigationFragment : BaseMvpFragment<NavigationView,NavigationPresenter>()
     }
 
     override fun SuccessData() {
+        val sPutils = SPutils()
+        sPutils.clear()
+        val intent = Intent(activity,LoginActivity::class.java)
+        startActivity(intent)
+
         //退出应用
-        App.logoutApp()
+        //App.logoutApp()
     }
 
     override fun showLoading() {

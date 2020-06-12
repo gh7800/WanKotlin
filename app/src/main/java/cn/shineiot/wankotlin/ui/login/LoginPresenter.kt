@@ -16,9 +16,10 @@ class LoginPresenter : BasePresenter<LoginView.View>() {
     private lateinit var job: Job
     fun login(username: String, password: String) {
 
-        job = GlobalScope.launch {
+        job = GlobalScope.launch(Dispatchers.Main) {
             val user = HttpClient.service.loginC(username, password)
 
+            delay(3000)
             if (user.errorCode == 0){
                 mRootView?.successData(user.data)
             }else{
@@ -43,7 +44,7 @@ class LoginPresenter : BasePresenter<LoginView.View>() {
     /**
      * 取消登录
      */
-    fun cancleLogin(){
+    fun cancelLogin(){
         if(job.isActive){
             job.cancel()
         }

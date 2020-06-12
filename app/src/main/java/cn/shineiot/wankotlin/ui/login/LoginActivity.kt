@@ -31,7 +31,6 @@ import retrofit2.Response
 class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginView.View {
 
     private val sPutils = SPutils()
-    private lateinit var job: Job
 
     //handler的创建方法
     private val mHandler: Handler = object : Handler(Looper.getMainLooper()) {
@@ -56,9 +55,9 @@ class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginVi
 
     override fun initView() {
 
-        val name = sPutils.getValue(Constants.USERNAME,"");
+        val name = sPutils.getValue(Constants.USERNAME, "");
         LogUtil.e("---$name")
-        if(TextUtils.isEmpty(name as CharSequence?)){
+        if (TextUtils.isEmpty(name as CharSequence?)) {
 //            username.text = name
             username.text = Editable.Factory.getInstance().newEditable(name)
         }
@@ -81,26 +80,6 @@ class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginVi
 
                     presenter.login(username, password)
 
-                    //presenter.loginBy(username, password)
-
-                    /*job = launch {
-                        //LogUtil.e(Thread.currentThread().id)
-                        withContext(Dispatchers.IO) {
-                            //LogUtil.e(Thread.currentThread().id)
-                            delay(10000)
-                            result = HttpClient.service.loginBy(username, password).execute()
-                        }
-                        LogUtil.e(result)
-                        if (result.isSuccessful) {
-                            if (result.body()?.errorCode == 0) {
-                                result.body()?.data?.let { successData(it) }
-                            } else {
-                                errorMsg(result.body()?.errorMsg)
-                            }
-                        } else {
-                            errorMsg(result.message())
-                        }
-                    }*/
                 }
             }
         }
@@ -112,7 +91,7 @@ class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginVi
         sPutils.saveValue(Constants.PUBLIC_NAME, user.publicName)
         sPutils.saveValue(Constants.ID, user.id)
 
-        val name = sPutils.getValue(Constants.USERNAME,"");
+        val name = sPutils.getValue(Constants.USERNAME, "");
         LogUtil.e("$====$name")
 
         val intent = Intent(this, MainActivity::class.java)
@@ -123,19 +102,13 @@ class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginVi
 
     override fun showLoading() {
 
-        MDialogUtil.showLoading(mContext,"登录中", OnDialogDismissListener {
-                if (job.isCompleted) {
-                    job.cancel() //取消登录请求
-                }else{
-                    LogUtil.e("dialog关闭")
-                }
-            })
+        MDialogUtil.showLoading(mContext, "登录中", OnDialogDismissListener {
+            presenter.cancelLogin()
+        })
     }
 
     override fun dismissLoading() {
-        mHandler.postDelayed({
-            MDialogUtil.hideDialog()
-        }, 1000)
+        MDialogUtil.hideDialog()
 
     }
 
