@@ -1,5 +1,7 @@
 package cn.shineiot.wankotlin.ui.login
 
+import autodispose2.AutoDispose
+import autodispose2.androidx.lifecycle.AndroidLifecycleScopeProvider
 import cn.shineiot.base.mvp.BasePresenter
 import cn.shineiot.base.mvp.BaseResult
 import cn.shineiot.base.utils.LogUtil
@@ -28,7 +30,9 @@ class LoginPresenter : BasePresenter<LoginView.View>() {
         }
 
 
-        /*HttpClient.service.login(username, password).compose(observableTransformer()).subscribe(object:AbstractObserver<User>(){
+        HttpClient.service.login(username, password)
+            .compose(observableTransformer())
+            .subscribe(object:AbstractObserver<User>(){
             override fun requestSuccess(t: User?) {
 
             }
@@ -37,18 +41,7 @@ class LoginPresenter : BasePresenter<LoginView.View>() {
 
             }
 
-        } )*/
-
-        /*HttpClient.login(username, password, object : AbstractObserver<User>() {
-            override fun requestSuccess(user: User) {
-                mRootView?.successData(user)
-            }
-
-            override fun requestFaild(error: String?) {
-                mRootView?.errorMsg(error)
-            }
-
-        })*/
+        } )
 
     }
 
