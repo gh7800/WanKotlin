@@ -7,7 +7,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 /**
- * Created by xuhao on 2017/11/16.
+ * Created by
  */
 open class BasePresenter<T : IBaseView> : IPresenter<T> {
 
@@ -40,13 +40,8 @@ open class BasePresenter<T : IBaseView> : IPresenter<T> {
     private class MvpViewNotAttachedException internal constructor() :
         RuntimeException("Please call IPresenter.attachView(IBaseView) before" + " requesting data to the IPresenter")
 
-    /*fun addSubscription(observable : Observable<*>, subscriber : AbstractObserver<*>) {
 
-            observable.compose(observableTransformer()).subscribe()
-
-    }*/
-
-    private fun <T> observableTransformer(): ObservableTransformer<T, T> {
+    public fun <T> observableTransformer(): ObservableTransformer<T, T> {
         return ObservableTransformer { upstream ->
             upstream
                 .subscribeOn(Schedulers.io())

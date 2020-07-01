@@ -28,6 +28,17 @@ class LoginPresenter : BasePresenter<LoginView.View>() {
         }
 
 
+        /*HttpClient.service.login(username, password).compose(observableTransformer()).subscribe(object:AbstractObserver<User>(){
+            override fun requestSuccess(t: User?) {
+
+            }
+
+            override fun requestFaild(error: String?) {
+
+            }
+
+        } )*/
+
         /*HttpClient.login(username, password, object : AbstractObserver<User>() {
             override fun requestSuccess(user: User) {
                 mRootView?.successData(user)

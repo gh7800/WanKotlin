@@ -14,7 +14,7 @@ object HttpClient {
         RetrofitManager.getRetrofit().create(HttpService::class.java)
     }
 
-    private fun <T> observableTransformer(): ObservableTransformer<T, T> {
+    public fun <T> observableTransformer(): ObservableTransformer<T, T> {
         return ObservableTransformer { upstream ->
             upstream.subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
