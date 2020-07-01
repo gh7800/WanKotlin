@@ -10,14 +10,14 @@ import io.reactivex.schedulers.Schedulers
 
 object HttpClient {
 
-     val service: HttpService by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
+    val service: HttpService by lazy(LazyThreadSafetyMode.SYNCHRONIZED) {
         RetrofitManager.getRetrofit().create(HttpService::class.java)
     }
 
     private fun <T> observableTransformer(): ObservableTransformer<T, T> {
         return ObservableTransformer { upstream ->
             upstream.subscribeOn(Schedulers.io())
-                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
         }
     }
@@ -30,7 +30,7 @@ object HttpClient {
     }
 
     //退出登录
-    fun logout(abstractObserver: AbstractObserver<User>){
+    fun logout(abstractObserver: AbstractObserver<User>) {
         service.logout()
             .compose(observableTransformer())
             .subscribe(abstractObserver)
