@@ -1,6 +1,10 @@
 package cn.shineiot.base.mvp
 
+import io.reactivex.Observable
+import io.reactivex.ObservableTransformer
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 /**
  * Created by xuhao on 2017/11/16.
@@ -36,11 +40,18 @@ open class BasePresenter<T : IBaseView> : IPresenter<T> {
     private class MvpViewNotAttachedException internal constructor() :
         RuntimeException("Please call IPresenter.attachView(IBaseView) before" + " requesting data to the IPresenter")
 
-    /*fun addSubscription(observable: Observable<*>,subscriber: Subscriber<BaseResult<T>>) {
-        observable
-            .subscribeOn(Schedulers.io())
-            .unsubscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-//            .subscribe(subscriber)
+    /*fun addSubscription(observable : Observable<*>, subscriber : AbstractObserver<*>) {
+
+            observable.compose(observableTransformer()).subscribe()
+
     }*/
+
+    private fun <T> observableTransformer(): ObservableTransformer<T, T> {
+        return ObservableTransformer { upstream ->
+            upstream
+                .subscribeOn(Schedulers.io())
+                .unsubscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+        }
+    }
 }

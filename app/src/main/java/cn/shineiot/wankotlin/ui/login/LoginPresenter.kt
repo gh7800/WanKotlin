@@ -6,19 +6,29 @@ import cn.shineiot.base.utils.LogUtil
 import cn.shineiot.wankotlin.bean.User
 import cn.shineiot.wankotlin.http.AbstractObserver
 import cn.shineiot.wankotlin.http.HttpClient
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class LoginPresenter : BasePresenter<LoginView.View>() {
 
+    private lateinit var job: Job
     fun login(username: String, password: String) {
 
-        HttpClient.login(username, password, object : AbstractObserver<User>() {
+        job = GlobalScope.launch(Dispatchers.Main) {
+            val user = HttpClient.service.loginC(username, password)
+
+            delay(3000)
+            if (user.errorCode == 0){
+                mRootView?.successData(user.data)
+            }else{
+                mRootView?.errorMsg(user.errorMsg)
+            }
+        }
+
+
+        /*HttpClient.login(username, password, object : AbstractObserver<User>() {
             override fun requestSuccess(user: User) {
                 mRootView?.successData(user)
             }
@@ -27,8 +37,17 @@ class LoginPresenter : BasePresenter<LoginView.View>() {
                 mRootView?.errorMsg(error)
             }
 
-        })
+        })*/
 
+    }
+
+    /**
+     * 取消登录
+     */
+    fun cancelLogin(){
+        if(job.isActive){
+            job.cancel()
+        }
     }
 
 

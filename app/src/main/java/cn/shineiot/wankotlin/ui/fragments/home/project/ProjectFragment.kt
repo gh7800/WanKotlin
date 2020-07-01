@@ -6,6 +6,7 @@ import android.os.Handler
 import android.view.View
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import cn.shineiot.base.mvp.BaseFragment
+import cn.shineiot.base.mvp.BaseMvpFragment
 import cn.shineiot.base.utils.LogUtil
 import cn.shineiot.base.utils.ToastUtils
 import cn.shineiot.wankotlin.R
@@ -19,7 +20,10 @@ import com.chad.library.adapter.base.module.BaseLoadMoreModule
 import com.chad.library.adapter.base.module.LoadMoreModule
 import kotlinx.android.synthetic.main.fragment_project.*
 
-class ProjectFragment : BaseFragment<ProjectView, ProjectPresenter>(), ProjectView,
+/**
+ * 最新项目
+ */
+class ProjectFragment : BaseMvpFragment<ProjectView, ProjectPresenter>(), ProjectView,
     SwipeRefreshLayout.OnRefreshListener,OnItemChildClickListener {
     private var page: Int = 1
     private lateinit var adapter: ProjectAdapter

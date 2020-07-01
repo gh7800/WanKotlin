@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import android.text.Editable
 import android.text.TextUtils
 import cn.shineiot.base.mvp.BaseMVPActivity
 import cn.shineiot.base.mvp.BaseResult
@@ -29,8 +30,7 @@ import retrofit2.Response
  */
 class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginView.View {
 
-    private val sPutils by lazy { SPutils() }
-    private lateinit var job: Job
+    private val sPutils = SPutils()
 
     //handler的创建方法
     private val mHandler: Handler = object : Handler(Looper.getMainLooper()) {
@@ -42,7 +42,7 @@ class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginVi
         }
     }
 
-    override fun initPresenter(): LoginPresenter? {
+    override fun initPresenter(): LoginPresenter {
         return LoginPresenter()
     }
 
@@ -54,6 +54,13 @@ class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginVi
     private lateinit var result: Response<BaseResult<User>>
 
     override fun initView() {
+
+        val name = sPutils.getValue(Constants.USERNAME, "");
+        LogUtil.e("---$name")
+        if (TextUtils.isEmpty(name as CharSequence?)) {
+//            username.text = name
+            username.text = Editable.Factory.getInstance().newEditable(name)
+        }
 
         login.isEnabled = true  //直接用id调用view的属性 （需要插件 kotlin-android-extensions 的支持）
 
@@ -71,27 +78,8 @@ class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginVi
                 else -> {
                     showLoading()
 
-                    //presenter?.login(username, password)
-                    //presenter?.loginBy(username, password)
+                    presenter.login(username, password)
 
-                    job = launch {
-                        //LogUtil.e(Thread.currentThread().id)
-                        withContext(Dispatchers.IO) {
-                            //LogUtil.e(Thread.currentThread().id)
-                            delay(10000)
-                            result = HttpClient.service.loginBy(username, password).execute()
-                        }
-                        LogUtil.e(result)
-                        if (result.isSuccessful) {
-                            if (result.body()?.errorCode == 0) {
-                                result.body()?.data?.let { successData(it) }
-                            } else {
-                                errorMsg(result.body()?.errorMsg)
-                            }
-                        } else {
-                            errorMsg(result.message())
-                        }
-                    }
                 }
             }
         }
@@ -103,6 +91,9 @@ class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginVi
         sPutils.saveValue(Constants.PUBLIC_NAME, user.publicName)
         sPutils.saveValue(Constants.ID, user.id)
 
+        val name = sPutils.getValue(Constants.USERNAME, "");
+        LogUtil.e("$====$name")
+
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
@@ -111,19 +102,13 @@ class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginVi
 
     override fun showLoading() {
 
-        MDialogUtil.showLoading(mContext, OnDialogDismissListener {
-                if (job.isActive) {
-                    job.cancel() //取消登录请求
-                }else{
-                    LogUtil.e("dialog关闭")
-                }
-            })
+        MDialogUtil.showLoading(mContext, "登录中", OnDialogDismissListener {
+            presenter.cancelLogin()
+        })
     }
 
     override fun dismissLoading() {
-        mHandler.postDelayed({
-            MDialogUtil.hideDialog()
-        }, 1000)
+        MDialogUtil.hideDialog()
 
     }
 

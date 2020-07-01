@@ -1,4 +1,3 @@
-
 package cn.shineiot.base.mvp
 
 import android.os.Bundle
@@ -8,8 +7,9 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
 
+abstract class BaseMvpFragment<V : IBaseView, T : BasePresenter<V>> : Fragment() {
 
-abstract class BaseFragment : Fragment() {
+    var presenter: T? = null
 
     /**
      * 视图是否加载完毕
@@ -29,6 +29,21 @@ abstract class BaseFragment : Fragment() {
         return inflater.inflate(getLayoutId(), null)
     }
 
+    /*override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        LogUtil.e("hidden---$hidden")
+        lazyLoad()
+    }*/
+
+    /*override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        LogUtil.e("isVisibleToUser----$isVisibleToUser")
+        if (isVisibleToUser) {
+//            lazyLoadDataIfPrepared()
+            lazyLoad()
+        }
+    }*/
+
     override fun onResume() {
         super.onResume()
         lazyLoad()
@@ -36,15 +51,21 @@ abstract class BaseFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        initP()
         initView()
 //        isViewPrepare = true
 //        lazyLoadDataIfPrepared()
     }
 
+    /**
+     * 初始化presenter
+     */
+    abstract fun initPresenter(): T?
 
-
-
+    private fun initP() {
+        presenter = initPresenter()
+        presenter?.attachView(this as V)
+    }
 
     private fun lazyLoadDataIfPrepared() {
         lazyLoad()
@@ -72,6 +93,8 @@ abstract class BaseFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        presenter?.detachView()
+        this.presenter = null
     }
 
 }

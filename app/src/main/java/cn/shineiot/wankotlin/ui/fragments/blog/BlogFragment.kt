@@ -3,6 +3,7 @@ package cn.shineiot.wankotlin.ui.fragments.blog
 import android.content.Intent
 import android.view.View
 import cn.shineiot.base.mvp.BaseFragment
+import cn.shineiot.base.mvp.BaseMvpFragment
 import cn.shineiot.base.utils.LogUtil
 import cn.shineiot.base.utils.ToastUtils
 import cn.shineiot.wankotlin.R
@@ -16,7 +17,7 @@ import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.chad.library.adapter.base.module.BaseLoadMoreModule
 import kotlinx.android.synthetic.main.fragment_blog.*
 
-class BlogFragment : BaseFragment<BlogView, BlogPresenter>(), BlogView, OnItemChildClickListener,
+class BlogFragment : BaseMvpFragment<BlogView, BlogPresenter>(), BlogView, OnItemChildClickListener,
     OnItemClickListener, OnLoadMoreListener {
     private var page = 0
     private lateinit var adapter: BlogAdapter
@@ -45,6 +46,7 @@ class BlogFragment : BaseFragment<BlogView, BlogPresenter>(), BlogView, OnItemCh
     }
 
     override fun lazyLoad() {
+        page = 0
         presenter?.getMyCollect(page)
     }
 

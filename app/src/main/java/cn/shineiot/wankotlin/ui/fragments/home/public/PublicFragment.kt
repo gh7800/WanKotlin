@@ -4,10 +4,10 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Handler
 import android.view.View
-import android.widget.ExpandableListView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import cn.shineiot.base.mvp.BaseFragment
+import cn.shineiot.base.mvp.BaseMvpFragment
 import cn.shineiot.base.utils.LogUtil
 import cn.shineiot.base.utils.ToastUtils
 import cn.shineiot.wankotlin.R
@@ -19,7 +19,10 @@ import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.chad.library.adapter.base.module.BaseLoadMoreModule
 import kotlinx.android.synthetic.main.fragment_public.*
 
-class PublicFragment : BaseFragment<PublicView, PublicPresenter>(), PublicView, OnItemClickListener,OnItemChildClickListener,
+/**
+ * 最新博文
+ */
+class PublicFragment : BaseMvpFragment<PublicView, PublicPresenter>(), PublicView, OnItemClickListener,OnItemChildClickListener,
     SwipeRefreshLayout.OnRefreshListener {
 
     private var page: Int = 0   //第x页
@@ -63,12 +66,21 @@ class PublicFragment : BaseFragment<PublicView, PublicPresenter>(), PublicView, 
         loadMoreModule.setOnLoadMoreListener(listener = {
             presenter?.getPublic(page)
         })
-
-        showLoading()
-        presenter?.getPublic(page)
     }
 
     override fun lazyLoad() {
+        LogUtil.e("public-lazyload")
+        /*showLoading()
+        page = 0
+        presenter?.getPublic(page)*/
+    }
+
+    override fun onResume() {
+        super.onResume()
+        LogUtil.e("onResume")
+        showLoading()
+        page = 0
+        presenter?.getPublic(page)
     }
 
     override fun onRefresh() {
