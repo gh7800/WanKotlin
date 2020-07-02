@@ -1,11 +1,13 @@
 package cn.shineiot.base.mvp
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import cn.shineiot.base.utils.LogUtil
 
 abstract class BaseMvpFragment<V : IBaseView, T : BasePresenter<V>> : Fragment() {
 
@@ -29,25 +31,12 @@ abstract class BaseMvpFragment<V : IBaseView, T : BasePresenter<V>> : Fragment()
         return inflater.inflate(getLayoutId(), null)
     }
 
-    /*override fun onHiddenChanged(hidden: Boolean) {
+    override fun onHiddenChanged(hidden: Boolean) {
         super.onHiddenChanged(hidden)
-        LogUtil.e("hidden---$hidden")
-        lazyLoad()
-    }*/
-
-    /*override fun setUserVisibleHint(isVisibleToUser: Boolean) {
-        super.setUserVisibleHint(isVisibleToUser)
-        LogUtil.e("isVisibleToUser----$isVisibleToUser")
-        if (isVisibleToUser) {
-//            lazyLoadDataIfPrepared()
-            lazyLoad()
-        }
-    }*/
-
-    override fun onResume() {
-        super.onResume()
-        lazyLoad()
+        LogUtil.e("hidden0---$hidden+${this.javaClass.simpleName}")
+        //lazyLoad()
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -55,6 +44,18 @@ abstract class BaseMvpFragment<V : IBaseView, T : BasePresenter<V>> : Fragment()
         initView()
 //        isViewPrepare = true
 //        lazyLoadDataIfPrepared()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        //lazyLoad()
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter?.detachView()
+        this.presenter = null
     }
 
     /**
@@ -91,10 +92,5 @@ abstract class BaseMvpFragment<V : IBaseView, T : BasePresenter<V>> : Fragment()
      */
     abstract fun lazyLoad()
 
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter?.detachView()
-        this.presenter = null
-    }
 
 }

@@ -1,7 +1,9 @@
 package cn.shineiot.base.mvp
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -9,13 +11,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.appcompat.widget.Toolbar
 import cn.shineiot.base.R
+import cn.shineiot.base.utils.LogUtil
 
 
 /**
  * BaseActivity基类
  */
 abstract class BaseActivity : AppCompatActivity() {
-    private var mContext: Context? = null
+    lateinit var mContext: Activity
 
     @SuppressLint("RestrictedApi")
     fun setToolbar(toolbar: Toolbar, title: String,textView: AppCompatTextView) {
@@ -35,6 +38,7 @@ abstract class BaseActivity : AppCompatActivity() {
         setContentView(layoutId())
 
         mContext = this
+        LogUtil.e("onCreate_${this.mContext.javaClass.simpleName}")
         initView()
     }
 
@@ -72,11 +76,15 @@ abstract class BaseActivity : AppCompatActivity() {
         imm.hideSoftInputFromWindow(mEditText.windowToken, 0)
     }
 
-
     override fun onDestroy() {
+        LogUtil.e("onDestroy_${this.mContext.javaClass.simpleName}")
         super.onDestroy()
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        LogUtil.e("onNewIntent_${this.mContext.javaClass.simpleName}")
+        super.onNewIntent(intent)
+    }
 }
 
 

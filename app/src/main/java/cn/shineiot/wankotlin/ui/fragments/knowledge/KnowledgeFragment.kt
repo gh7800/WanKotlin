@@ -3,6 +3,7 @@ package cn.shineiot.wankotlin.ui.fragments.knowledge
 import android.content.Intent
 import android.view.View
 import cn.shineiot.base.mvp.BaseMvpFragment
+import cn.shineiot.base.utils.LogUtil
 import cn.shineiot.base.utils.ToastUtils
 import cn.shineiot.wankotlin.R
 import cn.shineiot.wankotlin.bean.PageEntity
@@ -36,6 +37,13 @@ class KnowledgeFragment : BaseMvpFragment<KnowledgeView, KnowledgePresenter>(),K
         loadMoreModule.setOnLoadMoreListener(this)
         loadMoreModule.isAutoLoadMore = true
 
+        lazyLoad()
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        LogUtil.e("hidden3---$hidden")
+        lazyLoad()
     }
 
     override fun lazyLoad() {

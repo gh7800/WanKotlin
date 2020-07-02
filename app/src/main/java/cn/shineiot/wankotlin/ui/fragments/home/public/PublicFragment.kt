@@ -66,18 +66,11 @@ class PublicFragment : BaseMvpFragment<PublicView, PublicPresenter>(), PublicVie
         loadMoreModule.setOnLoadMoreListener(listener = {
             presenter?.getPublic(page)
         })
+        LogUtil.e("initView-public")
+        lazyLoad()
     }
 
     override fun lazyLoad() {
-        LogUtil.e("public-lazyload")
-        /*showLoading()
-        page = 0
-        presenter?.getPublic(page)*/
-    }
-
-    override fun onResume() {
-        super.onResume()
-        LogUtil.e("onResume")
         showLoading()
         page = 0
         presenter?.getPublic(page)
@@ -113,7 +106,8 @@ class PublicFragment : BaseMvpFragment<PublicView, PublicPresenter>(), PublicVie
     }
 
     override fun dismissLoading() {
-        publicSwip.isRefreshing = false
+        if(null != publicSwip) publicSwip.isRefreshing = false
+
         if(page > 1){
             loadMoreModule.loadMoreComplete()
         }
@@ -134,7 +128,7 @@ class PublicFragment : BaseMvpFragment<PublicView, PublicPresenter>(), PublicVie
 
     override fun onItemChildClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
         mPosition = position
-        ToastUtils.DEFAULT.show(position)
+        //ToastUtils.DEFAULT.show(position)
         val public:Public = adapter.getItem(position) as Public
         if(public.collect){
             presenter?.unCollect(public.id)

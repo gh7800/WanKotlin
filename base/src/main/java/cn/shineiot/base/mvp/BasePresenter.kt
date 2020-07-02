@@ -1,20 +1,24 @@
 package cn.shineiot.base.mvp
 
+import androidx.lifecycle.Lifecycle
+import com.uber.autodispose.AutoDispose
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 
 /**
- * Created by
+ * Created by gf63
  */
 open class BasePresenter<T : IBaseView> : IPresenter<T> {
 
     var mRootView: T? = null
+    lateinit var mLifecycle : Lifecycle
 
-    private var compositeDisposable = CompositeDisposable()
-
+    fun setLifeCycle(lifecycle: Lifecycle){
+        this.mLifecycle = lifecycle
+    }
 
     override fun attachView(mRootView: T) {
         this.mRootView = mRootView
@@ -22,12 +26,6 @@ open class BasePresenter<T : IBaseView> : IPresenter<T> {
 
     override fun detachView() {
         mRootView = null
-        //LogUtil.e("detachView")
-        //保证activity结束时取消所有正在执行的订阅
-        if (!compositeDisposable.isDisposed) {
-            compositeDisposable.clear()
-        }
-
     }
 
     private val isViewAttached: Boolean
@@ -40,8 +38,15 @@ open class BasePresenter<T : IBaseView> : IPresenter<T> {
     private class MvpViewNotAttachedException internal constructor() :
         RuntimeException("Please call IPresenter.attachView(IBaseView) before" + " requesting data to the IPresenter")
 
+    /*fun <Y> addSubscription(observable: Observable<Y>,abstractObserver: AbstractObserver<Y>){
+            observable
+                .compose(observableTransformer())
+                .`as`(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(mLifecycle)))
+                .subscribe(abstractObserver)
+    }*/
 
-    public fun <T> observableTransformer(): ObservableTransformer<T, T> {
+
+    fun <T> observableTransformer(): ObservableTransformer<T, T> {
         return ObservableTransformer { upstream ->
             upstream
                 .subscribeOn(Schedulers.io())

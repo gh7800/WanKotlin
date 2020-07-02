@@ -47,7 +47,7 @@ class MainActivity : BaseMVPActivity<MainView, MainPresenter>(), MainView {
 
         viewPager.addOnPageChangeListener(viewPagerChangeListener)
         viewPager.adapter = ViewPagerAdapter(supportFragmentManager)
-        viewPager.offscreenPageLimit = 4
+        //viewPager.offscreenPageLimit = 2
     }
 
 
@@ -123,9 +123,10 @@ class MainActivity : BaseMVPActivity<MainView, MainPresenter>(), MainView {
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        super.onKeyDown(keyCode, event)
-
-        return false
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            finish()
+        }
+        return super.onKeyDown(keyCode, event)
     }
 
 }

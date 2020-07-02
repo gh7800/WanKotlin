@@ -2,16 +2,15 @@ package cn.shineiot.wankotlin.ui.fragments.navigation
 
 import android.content.Intent
 import cn.shineiot.base.mvp.BaseMvpFragment
-import cn.shineiot.base.utils.SPutils
+import cn.shineiot.base.utils.SharePreutils
 import cn.shineiot.base.utils.ToastUtils
-import cn.shineiot.wankotlin.App
 import cn.shineiot.wankotlin.R
 import cn.shineiot.wankotlin.ui.login.LoginActivity
 import cn.shineiot.wankotlin.utils.Constants
 import kotlinx.android.synthetic.main.fragment_navigation.*
 
 class NavigationFragment : BaseMvpFragment<NavigationView,NavigationPresenter>() ,NavigationView{
-    val sPutils :SPutils by lazy { SPutils() }
+    private val sharePreutils :SharePreutils by lazy { SharePreutils() }
 
     override fun initPresenter(): NavigationPresenter? {
         return NavigationPresenter()
@@ -26,19 +25,22 @@ class NavigationFragment : BaseMvpFragment<NavigationView,NavigationPresenter>()
             logout.isEnabled = false
             presenter?.logout()
         }
+
+        lazyLoad()
     }
 
     override fun lazyLoad() {
-        if(id_text.text.isEmpty()) {
-            id_text.text = sPutils.getValue(Constants.ID, 0).toString()
-            username_text.text = sPutils.getValue(Constants.USERNAME, "").toString()
-            publicname_text.text = sPutils.getString(Constants.PUBLIC_NAME)
-        }
+//        if(id_text.text.isEmpty()) {
+            id_text.text = sharePreutils.getValue(Constants.ID, 0).toString()
+            username_text.text = sharePreutils.getValue(Constants.USERNAME, "").toString()
+            publicname_text.text = sharePreutils.getString(Constants.PUBLIC_NAME)
+//        }
     }
 
     override fun SuccessData() {
-        val sPutils = SPutils()
+        val sPutils = SharePreutils()
         sPutils.clear()
+
         val intent = Intent(activity,LoginActivity::class.java)
         startActivity(intent)
 

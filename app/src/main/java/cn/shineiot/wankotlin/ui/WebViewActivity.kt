@@ -1,8 +1,10 @@
 package cn.shineiot.wankotlin.ui
 
+import android.content.Intent
 import androidx.appcompat.widget.LinearLayoutCompat
 import cn.shineiot.base.mvp.BaseActivity
 import cn.shineiot.wankotlin.R
+import cn.shineiot.wankotlin.ui.main.MainActivity
 import com.just.agentweb.AgentWeb
 import kotlinx.android.synthetic.main.activity_webview.*
 import kotlinx.android.synthetic.main.include_toolbar.*
@@ -29,5 +31,17 @@ class WebViewActivity : BaseActivity() {
     override fun onSupportNavigateUp(): Boolean {
         finish()
         return super.onSupportNavigateUp()
+    }
+
+    override fun onBackPressed() {
+        val intent = Intent(mContext,MainActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+//        val intent = Intent(mContext,MainActivity::class.java)
+//        startActivity(intent)
     }
 }

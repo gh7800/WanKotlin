@@ -59,6 +59,6 @@ dependencies {
     api 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
     api 'com.github.githubwing:DragPhotoView:1.0.1'
 
-    api 'com.uber.autodispose2:autodispose-android:2.0.0'
-    api 'com.uber.autodispose2:autodispose-androidx-lifecycle:2.0.0'
+    api 'com.uber.autodispose:autodispose:1.1.0'
+    api 'com.uber.autodispose:autodispose-android-archcomponents:1.1.0'
 }

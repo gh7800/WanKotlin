@@ -1,55 +1,62 @@
 package cn.shineiot.wankotlin.ui.login
 
-import autodispose2.AutoDispose
-import autodispose2.androidx.lifecycle.AndroidLifecycleScopeProvider
+import android.annotation.SuppressLint
+import androidx.lifecycle.Lifecycle
 import cn.shineiot.base.mvp.BasePresenter
 import cn.shineiot.base.mvp.BaseResult
 import cn.shineiot.base.utils.LogUtil
 import cn.shineiot.wankotlin.bean.User
 import cn.shineiot.wankotlin.http.AbstractObserver
 import cn.shineiot.wankotlin.http.HttpClient
+import com.uber.autodispose.AutoDispose.autoDisposable
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import kotlinx.coroutines.*
-import retrofit2.Call
-import retrofit2.Callback
 import retrofit2.Response
 
 class LoginPresenter : BasePresenter<LoginView.View>() {
 
+    //lateinit var lifecycle: Lifecycle
+
     private lateinit var job: Job
+
+    /*fun setLifeCycle(lifecycle: Lifecycle){
+        this.lifecycle = lifecycle
+    }*/
+
+    @SuppressLint("CheckResult")
     fun login(username: String, password: String) {
 
-        job = GlobalScope.launch(Dispatchers.Main) {
+        /*job = GlobalScope.launch(Dispatchers.Main) {
             val user = HttpClient.service.loginC(username, password)
 
             delay(3000)
-            if (user.errorCode == 0){
+            if (user.errorCode == 0) {
                 mRootView?.successData(user.data)
-            }else{
+            } else {
                 mRootView?.errorMsg(user.errorMsg)
             }
-        }
+        }*/
 
-
-        HttpClient.service.login(username, password)
+        HttpClient.service
+            .login(username, password)
             .compose(observableTransformer())
-            .subscribe(object:AbstractObserver<User>(){
-            override fun requestSuccess(t: User?) {
-
-            }
-
-            override fun requestFaild(error: String?) {
-
-            }
-
-        } )
+            //.`as`(autoDisposable(AndroidLifecycleScopeProvider.from(mLifecycle)))
+            .subscribe(object : AbstractObserver<User>() {
+                override fun requestSuccess(t: User?) {
+                    t?.let { mRootView?.successData(it) }
+                }
+                override fun requestFaild(error: String?) {
+                    mRootView?.errorMsg(error)
+                }
+            })
 
     }
 
     /**
      * 取消登录
      */
-    fun cancelLogin(){
-        if(job.isActive){
+    fun cancelLogin() {
+        if (job.isActive) {
             job.cancel()
         }
     }
@@ -66,7 +73,7 @@ class LoginPresenter : BasePresenter<LoginView.View>() {
             if (result.isSuccessful) {
                 if (result.body()?.errorCode == 0) {
                     result.body()?.data?.let { mRootView?.successData(it) }
-                }else{
+                } else {
                     mRootView?.errorMsg(result.body()?.errorMsg)
                 }
             } else {

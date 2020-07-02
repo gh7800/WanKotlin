@@ -100,7 +100,7 @@ class ProjectFragment : BaseMvpFragment<ProjectView, ProjectPresenter>(), Projec
     }
 
     override fun dismissLoading() {
-        if (projectSwip.isRefreshing) {
+        if (null != projectSwip && projectSwip.isRefreshing) {
             projectSwip.isRefreshing = false
         }
         if(page > 1){

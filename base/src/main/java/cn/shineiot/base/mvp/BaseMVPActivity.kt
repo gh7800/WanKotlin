@@ -3,6 +3,7 @@ package cn.shineiot.base.mvp
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -45,10 +46,10 @@ abstract class BaseMVPActivity<V : IBaseView, T : BasePresenter<V>> : AppCompatA
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layoutId())
+        mContext = this
+        LogUtil.e("onCreate_${this.mContext.javaClass.simpleName}")
 
         job = Job()
-        LogUtil.e("coroutineContext---$coroutineContext")
-        mContext = this
         initP()
         initView()
     }
@@ -77,6 +78,7 @@ abstract class BaseMVPActivity<V : IBaseView, T : BasePresenter<V>> : AppCompatA
     fun initP() {
         presenter = initPresenter()
         presenter.attachView(this as V)
+        presenter.setLifeCycle(lifecycle)
     }
 
     /**
@@ -96,14 +98,27 @@ abstract class BaseMVPActivity<V : IBaseView, T : BasePresenter<V>> : AppCompatA
         imm.hideSoftInputFromWindow(mEditText.windowToken, 0)
     }
 
+    override fun onResume() {
+        super.onResume()
+        LogUtil.e("onResume_${this.mContext.javaClass.simpleName}")
+    }
 
     override fun onDestroy() {
         super.onDestroy()
-        presenter?.detachView()
-
+        LogUtil.e("onDestroy_${this.mContext.javaClass.simpleName}")
+        presenter.detachView()
         job.cancel()
     }
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        LogUtil.e("onNewIntent_${this.mContext.javaClass.simpleName}")
+    }
+
+    override fun onStart() {
+        super.onStart()
+        LogUtil.e("onStart_${this.mContext.javaClass.simpleName}")
+    }
 }
 
 

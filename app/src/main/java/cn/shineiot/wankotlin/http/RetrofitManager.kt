@@ -111,10 +111,13 @@ object RetrofitManager{
     private fun getOkHttpClient(): OkHttpClient {
         val cookieJar: ClearableCookieJar =
             PersistentCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(BaseApplication.context))
+
         //添加一个log拦截器,打印所有的log
-        val httpLoggingInterceptor = HttpLoggingInterceptor()
+        val httpLoggingInterceptor = HttpLoggingInterceptor(){
+            LogUtil.i(it)
+        }
         //可以设置请求过滤的水平,body,basic,headers
-        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BASIC
 
         //设置 请求的缓存的大小跟位置
         val cacheFile = File(App.context.cacheDir, "cache")

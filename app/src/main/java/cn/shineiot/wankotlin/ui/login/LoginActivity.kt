@@ -6,23 +6,19 @@ import android.os.Looper
 import android.os.Message
 import android.text.Editable
 import android.text.TextUtils
+import android.view.KeyEvent
 import cn.shineiot.base.mvp.BaseMVPActivity
 import cn.shineiot.base.mvp.BaseResult
 import cn.shineiot.base.utils.LogUtil
-import cn.shineiot.base.utils.SPutils
+import cn.shineiot.base.utils.SharePreutils
 import cn.shineiot.base.utils.ToastUtils
-import cn.shineiot.wankotlin.App.Companion.context
 import cn.shineiot.wankotlin.R
 import cn.shineiot.wankotlin.bean.User
-import cn.shineiot.wankotlin.http.HttpClient
 import cn.shineiot.wankotlin.ui.main.MainActivity
 import cn.shineiot.wankotlin.utils.Constants
 import cn.shineiot.wankotlin.utils.MDialogUtil
-import com.maning.mndialoglibrary.MProgressDialog
-import com.maning.mndialoglibrary.config.MDialogConfig
 import com.maning.mndialoglibrary.listeners.OnDialogDismissListener
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.coroutines.*
 import retrofit2.Response
 
 /**
@@ -30,7 +26,7 @@ import retrofit2.Response
  */
 class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginView.View {
 
-    private val sPutils = SPutils()
+    private val sPutils = SharePreutils()
 
     //handler的创建方法
     private val mHandler: Handler = object : Handler(Looper.getMainLooper()) {
@@ -50,8 +46,6 @@ class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginVi
     override fun layoutId(): Int {
         return R.layout.activity_login
     }
-
-    private lateinit var result: Response<BaseResult<User>>
 
     override fun initView() {
 
@@ -86,24 +80,27 @@ class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginVi
     }
 
     override fun successData(user: User) {
-        dismissLoading()
-        sPutils.saveValue(Constants.USERNAME, user.username)
-        sPutils.saveValue(Constants.PUBLIC_NAME, user.publicName)
-        sPutils.saveValue(Constants.ID, user.id)
+        ToastUtils.DEFAULT.show("登录成功")
+        username.postDelayed({
+            dismissLoading()
+            sPutils.saveValue(Constants.USERNAME, user.username)
+            sPutils.saveValue(Constants.PUBLIC_NAME, user.publicName)
+            sPutils.saveValue(Constants.ID, user.id)
 
-        val name = sPutils.getValue(Constants.USERNAME, "");
-        LogUtil.e("$====$name")
+            val name = sPutils.getValue(Constants.USERNAME, "");
+            LogUtil.e("$====$name")
 
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
-        finish()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        },5000)
 
     }
 
     override fun showLoading() {
 
         MDialogUtil.showLoading(mContext, "登录中", OnDialogDismissListener {
-            presenter.cancelLogin()
+            //presenter.cancelLogin()
         })
     }
 
@@ -115,5 +112,12 @@ class LoginActivity : BaseMVPActivity<LoginView.View, LoginPresenter>(), LoginVi
     override fun errorMsg(msg: String?) {
         dismissLoading()
         ToastUtils.DEFAULT.show(msg)
+    }
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            finish()
+        }
+        return super.onKeyDown(keyCode, event)
     }
 }

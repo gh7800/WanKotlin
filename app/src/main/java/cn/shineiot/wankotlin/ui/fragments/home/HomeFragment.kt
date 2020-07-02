@@ -32,14 +32,12 @@ class HomeFragment : BaseMvpFragment<HomeView, HomePresenter>(), HomeView {
     }
 
     override fun initView() {
-
-        LogUtil.e("initview")
         bannerView.setImageLoader(GlideImageLoader())
         bannerView.setIndicatorGravity(BannerConfig.RIGHT)
 
-        for (index in 1..tabTitle.size) {
-            home_tab_layout.addTab(home_tab_layout.newTab(), index - 1)
-            home_tab_layout.getTabAt(index - 1)?.text = tabTitle[index - 1]
+        for (index in tabTitle.indices) {
+            home_tab_layout.addTab(home_tab_layout.newTab(), index )
+            home_tab_layout.getTabAt(index)?.text = tabTitle[index]
         }
 
         home_tab_layout.addOnTabSelectedListener(object: TabLayout.OnTabSelectedListener{
@@ -76,9 +74,11 @@ class HomeFragment : BaseMvpFragment<HomeView, HomePresenter>(), HomeView {
             list.add(banner.imagePath)
             listTitle.add(banner.title)
         }
-        bannerView.setImages(list)
-        bannerView.setBannerTitles(listTitle)
-        bannerView.start()
+        if(null != bannerView) {
+            bannerView.setImages(list)
+            bannerView.setBannerTitles(listTitle)
+            bannerView.start()
+        }
     }
 
     override fun showLoading() {

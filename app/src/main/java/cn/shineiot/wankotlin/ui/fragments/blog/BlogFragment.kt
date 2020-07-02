@@ -1,7 +1,10 @@
 package cn.shineiot.wankotlin.ui.fragments.blog
 
 import android.content.Intent
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.FrameLayout
+import androidx.appcompat.widget.AppCompatButton
 import cn.shineiot.base.mvp.BaseFragment
 import cn.shineiot.base.mvp.BaseMvpFragment
 import cn.shineiot.base.utils.LogUtil
@@ -16,6 +19,7 @@ import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.chad.library.adapter.base.listener.OnLoadMoreListener
 import com.chad.library.adapter.base.module.BaseLoadMoreModule
 import kotlinx.android.synthetic.main.fragment_blog.*
+import kotlinx.android.synthetic.main.layout_empty.*
 
 class BlogFragment : BaseMvpFragment<BlogView, BlogPresenter>(), BlogView, OnItemChildClickListener,
     OnItemClickListener, OnLoadMoreListener {
@@ -43,6 +47,22 @@ class BlogFragment : BaseMvpFragment<BlogView, BlogPresenter>(), BlogView, OnIte
         loadModule = adapter.loadMoreModule
         loadModule.setOnLoadMoreListener(this)
         loadModule.isAutoLoadMore = true
+
+        val layout = LayoutInflater.from(context).inflate(R.layout.layout_empty,null)
+        val emptyBt = layout.findViewById<AppCompatButton>(R.id.empty_bt)
+        adapter.setEmptyView(layout)
+
+        emptyBt.setOnClickListener {
+            lazyLoad()
+        }
+
+        lazyLoad()
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        LogUtil.e("hidden---$hidden")
+        super.onHiddenChanged(hidden)
+        //lazyLoad()
     }
 
     override fun lazyLoad() {
