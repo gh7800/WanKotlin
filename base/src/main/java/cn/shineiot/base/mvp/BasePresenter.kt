@@ -1,8 +1,6 @@
 package cn.shineiot.base.mvp
 
 import androidx.lifecycle.Lifecycle
-import com.uber.autodispose.AutoDispose
-import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
 import io.reactivex.Observable
 import io.reactivex.ObservableTransformer
 import io.reactivex.android.schedulers.AndroidSchedulers
