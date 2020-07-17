@@ -2,11 +2,11 @@ package cn.shineiot.wankotlin.ui.login
 
 import android.annotation.SuppressLint
 import androidx.lifecycle.Lifecycle
+import cn.shineiot.base.mvp.AbstractObserver
 import cn.shineiot.base.mvp.BasePresenter
 import cn.shineiot.base.mvp.BaseResult
 import cn.shineiot.base.utils.LogUtil
 import cn.shineiot.wankotlin.bean.User
-import cn.shineiot.wankotlin.http.AbstractObserver
 import cn.shineiot.wankotlin.http.HttpClient
 import com.uber.autodispose.AutoDispose.autoDisposable
 import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider
@@ -37,10 +37,10 @@ class LoginPresenter : BasePresenter<LoginView.View>() {
             }
         }*/
 
-        HttpClient.service
+        /*HttpClient.service
             .login(username, password)
             .compose(observableTransformer())
-            //.`as`(autoDisposable(AndroidLifecycleScopeProvider.from(mLifecycle)))
+            .`as`(autoDisposable(AndroidLifecycleScopeProvider.from(mLifecycle)))
             .subscribe(object : AbstractObserver<User>() {
                 override fun requestSuccess(t: User?) {
                     t?.let { mRootView?.successData(it) }
@@ -48,7 +48,20 @@ class LoginPresenter : BasePresenter<LoginView.View>() {
                 override fun requestFaild(error: String?) {
                     mRootView?.errorMsg(error)
                 }
-            })
+            })*/
+
+        addSubscription(HttpClient.service.login(username, password),object : AbstractObserver<User>(){
+            override fun requestSuccess(t: User?) {
+                if (t != null) {
+                    mRootView?.successData(t)
+                }
+            }
+
+            override fun requestFaild(error: String?) {
+               mRootView?.errorMsg(error)
+            }
+
+        })
 
     }
 

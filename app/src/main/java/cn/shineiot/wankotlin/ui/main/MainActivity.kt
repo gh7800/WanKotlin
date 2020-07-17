@@ -1,5 +1,6 @@
 package cn.shineiot.wankotlin.ui.main
 
+import android.content.Intent
 import android.os.Build
 import android.view.KeyEvent
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
+import cn.shineiot.base.bean.LoginEvent
 import cn.shineiot.base.mvp.BaseMVPActivity
 import cn.shineiot.base.utils.LogUtil
 import cn.shineiot.base.utils.ToastUtils
@@ -16,8 +18,11 @@ import cn.shineiot.wankotlin.ui.fragments.blog.BlogFragment
 import cn.shineiot.wankotlin.ui.fragments.home.HomeFragment
 import cn.shineiot.wankotlin.ui.fragments.knowledge.KnowledgeFragment
 import cn.shineiot.wankotlin.ui.fragments.navigation.NavigationFragment
+import cn.shineiot.wankotlin.ui.login.LoginActivity
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 /**
  * 首页
@@ -48,6 +53,8 @@ class MainActivity : BaseMVPActivity<MainView, MainPresenter>(), MainView {
         viewPager.addOnPageChangeListener(viewPagerChangeListener)
         viewPager.adapter = ViewPagerAdapter(supportFragmentManager)
         //viewPager.offscreenPageLimit = 2
+
+        EventBus.getDefault().register(this)
     }
 
 
@@ -120,6 +127,17 @@ class MainActivity : BaseMVPActivity<MainView, MainPresenter>(), MainView {
     override fun errorMsg(msg: String?) {
         LogUtil.e(msg)
         ToastUtils.DEFAULT.show(msg)
+    }
+
+    @Subscribe
+    fun startLogin(loginEvent: LoginEvent){
+        val intent = Intent(this,LoginActivity::class.java)
+        startActivity(intent)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().unregister(this)
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {

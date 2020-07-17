@@ -1,10 +1,10 @@
 package cn.shineiot.wankotlin.ui.fragments.home.public
 
+import cn.shineiot.base.mvp.AbstractObserver
 import cn.shineiot.base.mvp.BasePresenter
 import cn.shineiot.base.utils.LogUtil
 import cn.shineiot.wankotlin.bean.PageEntity
 import cn.shineiot.wankotlin.bean.Public
-import cn.shineiot.wankotlin.http.AbstractObserver
 import cn.shineiot.wankotlin.http.HttpClient
 
 class PublicPresenter :BasePresenter<PublicView>() {

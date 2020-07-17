@@ -1,5 +1,6 @@
 package cn.shineiot.wankotlin.http
 
+import cn.shineiot.base.mvp.AbstractObserver
 import cn.shineiot.wankotlin.bean.Banner
 import cn.shineiot.wankotlin.bean.PageEntity
 import cn.shineiot.wankotlin.bean.Public

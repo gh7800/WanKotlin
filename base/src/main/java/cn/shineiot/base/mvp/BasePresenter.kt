@@ -38,12 +38,12 @@ open class BasePresenter<T : IBaseView> : IPresenter<T> {
     private class MvpViewNotAttachedException internal constructor() :
         RuntimeException("Please call IPresenter.attachView(IBaseView) before" + " requesting data to the IPresenter")
 
-    /*fun <Y> addSubscription(observable: Observable<Y>,abstractObserver: AbstractObserver<Y>){
+    fun <Y> addSubscription(observable: Observable<BaseResult<Y>>,abstractObserver: AbstractObserver<Y>){
             observable
                 .compose(observableTransformer())
                 .`as`(AutoDispose.autoDisposable(AndroidLifecycleScopeProvider.from(mLifecycle)))
                 .subscribe(abstractObserver)
-    }*/
+    }
 
 
     fun <T> observableTransformer(): ObservableTransformer<T, T> {

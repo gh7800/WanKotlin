@@ -1,8 +1,8 @@
 package cn.shineiot.wankotlin.ui.fragments.home
 
+import cn.shineiot.base.mvp.AbstractObserver
 import cn.shineiot.base.mvp.BasePresenter
 import cn.shineiot.wankotlin.bean.Banner
-import cn.shineiot.wankotlin.http.AbstractObserver
 import cn.shineiot.wankotlin.http.HttpClient
 
 class HomePresenter : BasePresenter<HomeView>() {

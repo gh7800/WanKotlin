@@ -1,16 +1,19 @@
-package cn.shineiot.wankotlin.http;
+package cn.shineiot.base.mvp;
 
 import android.content.Intent;
 import android.text.TextUtils;
+
 import com.google.gson.JsonParseException;
+
+import org.greenrobot.eventbus.EventBus;
 import org.json.JSONException;
+
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
-import cn.shineiot.base.mvp.BaseResult;
+
+import cn.shineiot.base.bean.LoginEvent;
 import cn.shineiot.base.utils.LogUtil;
-import cn.shineiot.wankotlin.App;
-import cn.shineiot.wankotlin.ui.login.LoginActivity;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import retrofit2.HttpException;
@@ -62,9 +65,11 @@ public abstract class AbstractObserver<T> implements Observer<BaseResult<T>> {
 	 * 打开loginActivity
 	 */
 	private void startLoginActivity() {
-		Intent intent =new Intent(App.Companion.getContext(), LoginActivity.class);
+		/*Intent intent =new Intent(App.Companion.getContext(), LoginActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-		App.Companion.getContext().startActivity(intent);
+		App.Companion.getContext().startActivity(intent);*/
+
+		EventBus.getDefault().post(new LoginEvent("login"));
 	}
 
 	@Override

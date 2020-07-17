@@ -1,4 +1,4 @@
-package cn.shineiot.wankotlin.http;
+package cn.shineiot.base.mvp;
 
 /**
  * @author GF63

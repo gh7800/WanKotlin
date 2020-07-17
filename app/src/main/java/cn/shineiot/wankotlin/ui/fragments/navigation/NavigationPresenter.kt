@@ -1,8 +1,9 @@
 package cn.shineiot.wankotlin.ui.fragments.navigation
 
+import cn.shineiot.base.mvp.AbstractObserver
 import cn.shineiot.base.mvp.BasePresenter
 import cn.shineiot.wankotlin.bean.User
-import cn.shineiot.wankotlin.http.AbstractObserver
+
 import cn.shineiot.wankotlin.http.HttpClient
 
 class NavigationPresenter : BasePresenter<NavigationView>(){

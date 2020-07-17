@@ -32,6 +32,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
+    api 'androidx.appcompat:appcompat:1.1.0'
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     //api "com.android.support:appcompat-v7:$supportVersion"
     api "com.android.support.constraint:constraint-layout:$constraint_layout"
@@ -48,6 +49,7 @@ dependencies {
     api "com.squareup.okhttp3:okhttp:$okhttp"
     api "com.squareup.okhttp3:logging-interceptor:$logging_interceptor"
 
+    api "org.greenrobot:eventbus:$eventbus"
     api "com.github.bumptech.glide:glide:$glide"
     annotationProcessor "com.github.bumptech.glide:compiler:$glide"
     api "com.github.maning0303:MNProgressHUD:$MNProgressHUD"
@@ -55,10 +57,9 @@ dependencies {
     api "com.github.CymChad:BaseRecyclerViewAdapterHelper:$BaseRecyclerViewAdapterHelper"
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinx_coroutines_android"
     api "com.just.agentweb:agentweb:$agentweb"
-    api 'androidx.appcompat:appcompat:1.1.0'
-    api 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
-    api 'com.github.githubwing:DragPhotoView:1.0.1'
+    api "com.github.franmontiel:PersistentCookieJar:$PersistentCookieJar"
+    api "com.github.githubwing:DragPhotoView:$DragPhotoView"
 
-    api 'com.uber.autodispose:autodispose:1.1.0'
-    api 'com.uber.autodispose:autodispose-android-archcomponents:1.1.0'
+    api "com.uber.autodispose:autodispose:$autodispose"
+    api "com.uber.autodispose:autodispose-android-archcomponents:$autodispose"
 }
